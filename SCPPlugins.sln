@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JoinMidRound", "JoinMidRound\JoinMidRound.csproj", "{AAAFC3B2-615E-439E-AB27-48B8BF2940AE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CISpies", "CISpies\CISpies.csproj", "{8E3383D3-BCB4-43A4-B0C7-BD278D6847CA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocumentsPlugin", "DocumentsPlugin\DocumentsPlugin.csproj", "{AD198494-3778-4C38-802A-2948C5000ED3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AAAFC3B2-615E-439E-AB27-48B8BF2940AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AAAFC3B2-615E-439E-AB27-48B8BF2940AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AAAFC3B2-615E-439E-AB27-48B8BF2940AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AAAFC3B2-615E-439E-AB27-48B8BF2940AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E3383D3-BCB4-43A4-B0C7-BD278D6847CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E3383D3-BCB4-43A4-B0C7-BD278D6847CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E3383D3-BCB4-43A4-B0C7-BD278D6847CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E3383D3-BCB4-43A4-B0C7-BD278D6847CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD198494-3778-4C38-802A-2948C5000ED3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD198494-3778-4C38-802A-2948C5000ED3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD198494-3778-4C38-802A-2948C5000ED3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD198494-3778-4C38-802A-2948C5000ED3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
