@@ -10,6 +10,7 @@ using Player = Exiled.Events.Handlers.Player;
 
 namespace SCPPlugins.CISpies
 {
+    // ReSharper disable once InconsistentNaming
     public class CISpies : Plugin<Config>
     {
         public override string Author => "frankos6";
@@ -82,7 +83,7 @@ namespace SCPPlugins.CISpies
             }
             if (ev.Player.IsNTF && playerIsSpy && ev.Attacker.IsNTF && attackerIsSpy)
             {
-                ev.Attacker.ShowHint($"{ev.Player} is also a CI spy!",2f);
+                ev.Attacker.ShowHint($"{ev.Player.Nickname} is also a CI spy!",2f);
                 ev.DamageHandler.IsFriendlyFire = true;
             }
             else if (ev.Player.IsNTF && attackerIsSpy && ev.Attacker.IsNTF)
