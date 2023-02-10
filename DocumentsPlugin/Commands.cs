@@ -9,9 +9,10 @@ namespace SCPPlugins.DocumentsPlugin
     [CommandHandler(typeof(ClientCommandHandler))]
     public class DocumentsCommand : ICommand
     {
-        public string Command { get; } = "documents";
+        public string Command => "documents";
         public string[] Aliases { get; } = { "docs" };
-        public string Description { get; } = "Gets amount of collected documents.";
+        public string Description => "Gets amount of collected documents.";
+
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
             if (!Round.InProgress)
@@ -32,9 +33,9 @@ namespace SCPPlugins.DocumentsPlugin
     [CommandHandler(typeof(ClientCommandHandler))]
     public class DropDocumentsCommand : ICommand
     {
-        public string Command { get; } = "dropdocuments";
+        public string Command => "dropdocuments";
         public string[] Aliases { get; } = { "dropdocs" };
-        public string Description { get; } = "Drops specified amount of documents.";
+        public string Description => "Drops specified amount of documents.";
 
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {

@@ -22,6 +22,7 @@ namespace SCPPlugins.CISpies
             Player.Joined += PlayerOnJoined;
             Player.Hurting += PlayerOnHurting;
             Player.Dying += PlayerOnDying;
+            Player.ChangingSpectatedPlayer += PlayerOnChangingSpectatedPlayer;
             Exiled.Events.Handlers.Server.RoundStarted += ServerOnRoundStarted;
             Exiled.Events.Handlers.Server.RespawningTeam += ServerOnRespawningTeam;
             Exiled.Events.Handlers.Server.EndingRound += ServerOnEndingRound;
@@ -33,6 +34,7 @@ namespace SCPPlugins.CISpies
             Player.Joined -= PlayerOnJoined;
             Player.Hurting -= PlayerOnHurting;
             Player.Dying -= PlayerOnDying;
+            Player.ChangingSpectatedPlayer -= PlayerOnChangingSpectatedPlayer;
             Exiled.Events.Handlers.Server.RoundStarted -= ServerOnRoundStarted;
             Exiled.Events.Handlers.Server.RespawningTeam -= ServerOnRespawningTeam;
             Exiled.Events.Handlers.Server.EndingRound -= ServerOnEndingRound;
@@ -42,9 +44,11 @@ namespace SCPPlugins.CISpies
         private void ServerOnRespawningTeam(RespawningTeamEventArgs ev)
         {
             if (ev.NextKnownTeam == SpawnableTeamType.ChaosInsurgency) return;
+            if (Server.SessionVariables["SpyRespawned"].Equals(true)) return;
             Random rng = new Random();
             if (rng.Next(0, 100) < Config.SpyChance)
             {
+                Server.SessionVariables["SpyRespawned"] = true;
                 Exiled.API.Features.Player target = ev.Players[rng.Next(ev.Players.Count)];
                 target.SessionVariables["IsSpy"] = true;
                 target.ShowHint("You are a Chaos Insurgency spy!\n" +
@@ -120,10 +124,19 @@ namespace SCPPlugins.CISpies
         
         private static void ServerOnRoundStarted()
         {
+            Server.SessionVariables["SpyRespawned"] = false;
             Exiled.API.Features.Player.Dictionary.ForEachValue(player =>
             {
                 player.SessionVariables["IsSpy"] = false;
             });
+        }
+        
+        private static void PlayerOnChangingSpectatedPlayer(ChangingSpectatedPlayerEventArgs ev)
+        {
+            if (ev.NewTarget.SessionVariables["IsSpy"].Equals(true))
+            {
+                ev.Player.ShowHint($"{ev.NewTarget.Nickname} is a CI spy.",10f);
+            }
         }
     }
 }
