@@ -111,14 +111,14 @@ namespace SCPPlugins.CISpies
             //if any spy is alive stop round from ending
             if (Exiled.API.Features.Player.Dictionary.Any(pair => pair.Value.SessionVariables["IsSpy"].Equals(true)))
             {
-                ev.IsAllowed = false;
+                ev.IsRoundEnded = false;
             }
             //if all alive players are spies end round with CI winning
             var alivePlayers = Exiled.API.Features.Player.Dictionary.Where(pair => pair.Value.IsAlive);
             if (alivePlayers.All(pair => pair.Value.SessionVariables["IsSpy"].Equals(true)))
             {
                 ev.LeadingTeam = LeadingTeam.ChaosInsurgency;
-                ev.IsAllowed = true;
+                ev.IsRoundEnded = true;
             }
         }
         
@@ -133,6 +133,7 @@ namespace SCPPlugins.CISpies
         
         private static void PlayerOnChangingSpectatedPlayer(ChangingSpectatedPlayerEventArgs ev)
         {
+            if (ev.NewTarget == null) return;
             if (ev.NewTarget.SessionVariables["IsSpy"].Equals(true))
             {
                 ev.Player.ShowHint($"{ev.NewTarget.Nickname} is a CI spy.",10f);

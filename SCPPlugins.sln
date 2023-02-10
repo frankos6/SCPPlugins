@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CISpies", "CISpies\CISpies.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocumentsPlugin", "DocumentsPlugin\DocumentsPlugin.csproj", "{AD198494-3778-4C38-802A-2948C5000ED3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MrugaczNerf", "MrugaczNerf\MrugaczNerf.csproj", "{80638EB2-7E44-4CE9-BB18-420B925C3152}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{AD198494-3778-4C38-802A-2948C5000ED3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD198494-3778-4C38-802A-2948C5000ED3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AD198494-3778-4C38-802A-2948C5000ED3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80638EB2-7E44-4CE9-BB18-420B925C3152}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80638EB2-7E44-4CE9-BB18-420B925C3152}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80638EB2-7E44-4CE9-BB18-420B925C3152}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80638EB2-7E44-4CE9-BB18-420B925C3152}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -70,7 +70,7 @@ namespace SCPPlugins.DocumentsPlugin
                 response = $"Dropped {count} documents.";
                 return true;
             }
-            else if (arg <= 0)
+            if (arg <= 0)
             {
                 response = "Argument must be bigger that 0.";
                 return false;

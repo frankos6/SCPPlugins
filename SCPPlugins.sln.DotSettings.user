@@ -2,4 +2,5 @@
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=F_003A_005CP_0020O_0020B_0020R_0020A_0020N_0020E_005Cbootstrapper_005Cscp_005Fsl_005CSCPSL_005FData_005CManaged_005CAssembly_002DCSharp_002Dfirstpass_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=F_003A_005CP_0020O_0020B_0020R_0020A_0020N_0020E_005Cbootstrapper_005Cscp_005Fsl_005CSCPSL_005FData_005CManaged_005CMirror_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=F_003A_005CP_0020O_0020B_0020R_0020A_0020N_0020E_005Cbootstrapper_005Cscp_005Fsl_005CSCPSL_005FData_005CManaged_005CUnityEngine_002ECoreModule_002Edll/@EntryIndexedValue">True</s:Boolean>
-	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=F_003A_005CP_0020O_0020B_0020R_0020A_0020N_0020E_005Cbootstrapper_005Cscp_005Fsl_005CSCPSL_005FData_005CManaged_005CUnityEngine_002EPhysicsModule_002Edll/@EntryIndexedValue">True</s:Boolean></wpf:ResourceDictionary>
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=F_003A_005CP_0020O_0020B_0020R_0020A_0020N_0020E_005Cbootstrapper_005Cscp_005Fsl_005CSCPSL_005FData_005CManaged_005CUnityEngine_002EPhysicsModule_002Edll/@EntryIndexedValue">True</s:Boolean>
+	<s:String x:Key="/Default/CodeInspection/Highlighting/SweaWarningsMode/@EntryValue">ShowAndRun</s:String></wpf:ResourceDictionary>

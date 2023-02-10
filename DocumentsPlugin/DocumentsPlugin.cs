@@ -72,11 +72,6 @@ namespace SCPPlugins.DocumentsPlugin
                 ev.Player.SessionVariables["Documents"] = 0;
                 string message = "Attention all personnel. The Foundation has secured important containment information";
                 Cassie.Message(message,isSubtitles:true);
-
-                Exiled.API.Features.Player.Dictionary.ForEachValue(player =>
-                {
-                    player.Role.Set(ev.Player.Role);
-                });
                 Round.EndRound();
             }
             else
