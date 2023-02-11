@@ -113,9 +113,9 @@ namespace SCPPlugins.CISpies
             {
                 ev.IsRoundEnded = false;
             }
-            //if all alive players are spies end round with CI winning
+            //if all alive players are spies or CIs end round with CI winning
             var alivePlayers = Exiled.API.Features.Player.Dictionary.Where(pair => pair.Value.IsAlive);
-            if (alivePlayers.All(pair => pair.Value.SessionVariables["IsSpy"].Equals(true)))
+            if (alivePlayers.All(pair => pair.Value.SessionVariables["IsSpy"].Equals(true) || pair.Value.IsCHI))
             {
                 ev.LeadingTeam = LeadingTeam.ChaosInsurgency;
                 ev.IsRoundEnded = true;
