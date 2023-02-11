@@ -46,7 +46,7 @@ namespace SCPPlugins.DocumentsPlugin
                 },
                 new DynamicSpawnPoint
                 {
-                    Chance = 100,
+                    Chance = 50,
                     Location = SpawnLocationType.InsideGr18
                 },
                 new DynamicSpawnPoint
@@ -73,6 +73,31 @@ namespace SCPPlugins.DocumentsPlugin
                 {
                     Chance = 50,
                     Location = SpawnLocationType.InsideLczWc
+                },
+                new DynamicSpawnPoint
+                {
+                    Chance = 50,
+                    Location = SpawnLocationType.InsideHid
+                },
+                new DynamicSpawnPoint
+                {
+                    Chance = 50,
+                    Location = SpawnLocationType.InsideServersBottom
+                },
+                new DynamicSpawnPoint
+                {
+                    Chance = 50,
+                    Location = SpawnLocationType.InsideHidLeft
+                },
+                new DynamicSpawnPoint
+                {
+                    Chance = 50,
+                    Location = SpawnLocationType.InsideHidRight
+                },
+                new DynamicSpawnPoint
+                {
+                    Chance = 50,
+                    Location = SpawnLocationType.InsideHczArmory
                 }
             }
         };
