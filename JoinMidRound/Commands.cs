@@ -21,6 +21,15 @@ namespace SCPPlugins.JoinMidRound
                 return false;
             }
             Player player = Player.Get(sender);
+            if (!Server.TryGetSessionVariable("LeftPlayers", out string[] list))
+            {
+                throw new Exception("Could not get LeftPlayers from session variables");
+            }
+            if (list.Contains(player.UserId))
+            {
+                response = "You already died this round, didn't you?";
+                return false;
+            }
             if (Round.ElapsedTime.TotalSeconds <= 120 && 
                 player.SessionVariables["JoinedMidRound"].Equals(true) && player.Role == RoleTypeId.Spectator)
             {
