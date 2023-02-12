@@ -51,6 +51,7 @@ namespace SCPPlugins.CISpies
                 Server.SessionVariables["SpyRespawned"] = true;
                 Exiled.API.Features.Player target = ev.Players[rng.Next(ev.Players.Count)];
                 target.SessionVariables["IsSpy"] = true;
+                Log.Debug($"{target.Nickname} respawned as a spy");
                 target.ShowHint("You are a Chaos Insurgency spy!\n" +
                                 "You will be revealed once you use the .reveal command\n" +
                                 "Friendly fire against CI's is reduced",10f);
