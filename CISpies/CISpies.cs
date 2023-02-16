@@ -79,25 +79,25 @@ namespace SCPPlugins.CISpies
             if (ev.Attacker.IsCHI && playerIsSpy && ev.Player.IsNTF)
             {
                 ev.Attacker.ShowHint($"{ev.Player.Nickname} is a CI spy!",2f);
-                ev.DamageHandler.IsFriendlyFire = true;
+                ev.Amount *= 0.4f;
             }
             if (ev.Player.IsCHI && attackerIsSpy && ev.Attacker.IsNTF)
             {
                 ev.Attacker.ShowHint("You are a CI spy, remember?",2f);
-                ev.DamageHandler.IsFriendlyFire = true;
+                ev.Amount *= 0.4f;
             }
             if (ev.Player.IsNTF && playerIsSpy && ev.Attacker.IsNTF && attackerIsSpy)
             {
                 ev.Attacker.ShowHint($"{ev.Player.Nickname} is also a CI spy!",2f);
-                ev.DamageHandler.IsFriendlyFire = true;
+                ev.Amount *= 0.4f;
             }
             else if (ev.Player.IsNTF && attackerIsSpy && ev.Attacker.IsNTF)
             {
-                ev.DamageHandler.IsFriendlyFire = false;
+                ev.Amount *= 2.5f;
             }
             else if (ev.Attacker.IsNTF && playerIsSpy && ev.Player.IsNTF)
             {
-                ev.DamageHandler.IsFriendlyFire = false;
+                ev.Amount *= 2.5f;
             }
         }
 
