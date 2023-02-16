@@ -38,7 +38,7 @@ namespace SCPPlugins.MrugaczNerf
         /// <inheritdoc cref="Exiled.Events.Handlers.Player.OnInteractingDoor"/>
         private static void PlayerOnInteractingDoor(InteractingDoorEventArgs ev)
         {
-            if (ev.Door.Room.Type != RoomType.HczEzCheckpointA && ev.Door.Room.Type != RoomType.HczEzCheckpointA) return;
+            if (ev.Door.Room.Type != RoomType.HczEzCheckpointA && ev.Door.Room.Type != RoomType.HczEzCheckpointB) return;
             if (ev.Player.Role == RoleTypeId.Scientist || ev.Player.Role == RoleTypeId.ClassD)
             {
                 Server.SessionVariables["LateGame"] = true;
