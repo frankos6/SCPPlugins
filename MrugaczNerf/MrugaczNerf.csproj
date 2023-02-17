@@ -32,7 +32,7 @@
         <WarningLevel>4</WarningLevel>
     </PropertyGroup>
     <PropertyGroup>
-      <PostBuildEvent>cmd /d /c copy /y C:\Users\Administrator\RiderProjects\SCPPlugins\MrugaczNerf\bin\Release\MrugaczNerf.dll C:\Users\Administrator\AppData\Roaming\EXILED\Plugins</PostBuildEvent>
+      <PostBuildEvent>cmd /d /c copy /y MrugaczNerf.dll %appdata%\EXILED\Plugins</PostBuildEvent>
     </PropertyGroup>
     <ItemGroup>
         <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">

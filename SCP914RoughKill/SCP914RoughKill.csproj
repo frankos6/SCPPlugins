@@ -32,7 +32,7 @@
         <WarningLevel>4</WarningLevel>
     </PropertyGroup>
     <PropertyGroup>
-      <PostBuildEvent>cmd /d /c copy /y C:\Users\frank\RiderProjects\SCPPlugins\SCP914RoughKill\bin\Release\SCP914RoughKill.dll C:\Users\frank\AppData\Roaming\EXILED\Plugins</PostBuildEvent>
+      <PostBuildEvent>cmd /d /c copy /y SCP914RoughKill.dll %appdata%\EXILED\Plugins</PostBuildEvent>
     </PropertyGroup>
     <ItemGroup>
         <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
