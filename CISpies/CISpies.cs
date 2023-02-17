@@ -6,7 +6,7 @@ using Exiled.Events.EventArgs.Player;
 using Exiled.Events.EventArgs.Server;
 using PlayerRoles;
 using Respawning;
-using Player = Exiled.Events.Handlers.Player;
+using Player = Exiled.API.Features.Player;
 
 namespace SCPPlugins.CISpies
 {
@@ -19,10 +19,10 @@ namespace SCPPlugins.CISpies
 
         public override void OnEnabled()
         {
-            Player.Joined += PlayerOnJoined;
-            Player.Hurting += PlayerOnHurting;
-            Player.Died += PlayerOnDied;
-            Player.ChangingSpectatedPlayer += PlayerOnChangingSpectatedPlayer;
+            Exiled.Events.Handlers.Player.Joined += PlayerOnJoined;
+            Exiled.Events.Handlers.Player.Hurting += PlayerOnHurting;
+            Exiled.Events.Handlers.Player.Died += PlayerOnDied;
+            Exiled.Events.Handlers.Player.ChangingSpectatedPlayer += PlayerOnChangingSpectatedPlayer;
             Exiled.Events.Handlers.Server.RoundStarted += ServerOnRoundStarted;
             Exiled.Events.Handlers.Server.RespawningTeam += ServerOnRespawningTeam;
             Exiled.Events.Handlers.Server.EndingRound += ServerOnEndingRound;
@@ -31,10 +31,10 @@ namespace SCPPlugins.CISpies
         
         public override void OnDisabled()
         {
-            Player.Joined -= PlayerOnJoined;
-            Player.Hurting -= PlayerOnHurting;
-            Player.Died -= PlayerOnDied;
-            Player.ChangingSpectatedPlayer -= PlayerOnChangingSpectatedPlayer;
+            Exiled.Events.Handlers.Player.Joined -= PlayerOnJoined;
+            Exiled.Events.Handlers.Player.Hurting -= PlayerOnHurting;
+            Exiled.Events.Handlers.Player.Died -= PlayerOnDied;
+            Exiled.Events.Handlers.Player.ChangingSpectatedPlayer -= PlayerOnChangingSpectatedPlayer;
             Exiled.Events.Handlers.Server.RoundStarted -= ServerOnRoundStarted;
             Exiled.Events.Handlers.Server.RespawningTeam -= ServerOnRespawningTeam;
             Exiled.Events.Handlers.Server.EndingRound -= ServerOnEndingRound;
@@ -49,7 +49,7 @@ namespace SCPPlugins.CISpies
             if (rng.Next(0, 100) < Config.SpyChance)
             {
                 Server.SessionVariables["SpyRespawned"] = true;
-                Exiled.API.Features.Player target = ev.Players[rng.Next(ev.Players.Count)];
+                Player target = ev.Players[rng.Next(ev.Players.Count)];
                 target.SessionVariables["IsSpy"] = true;
                 Log.Debug($"{target.Nickname} respawned as a spy");
                 target.ShowHint("You are a Chaos Insurgency spy!\n" +
@@ -61,11 +61,11 @@ namespace SCPPlugins.CISpies
         private static void PlayerOnDied(DiedEventArgs ev)
         {
             ev.Player.SessionVariables["IsSpy"] = false;
-            var spies = Exiled.API.Features.Player.List.Where(p => p.SessionVariables["IsSpy"].Equals(true) && p.IsAlive).ToArray();
-            var scps = Exiled.API.Features.Player.List.Count(p => p.IsScp && p.IsAlive);
-            var cis = Exiled.API.Features.Player.List.Count(p => p.LeadingTeam == LeadingTeam.ChaosInsurgency && p.IsAlive);
-            var foundation = Exiled.API.Features.Player.List.Count(p => p.LeadingTeam == LeadingTeam.FacilityForces && p.IsAlive);
-            Exiled.API.Features.Player spy = spies.Count() == 1 ? spies[0] : null;
+            var spies = Player.List.Where(p => p.SessionVariables["IsSpy"].Equals(true) && p.IsAlive).ToArray();
+            var scps = Player.List.Count(p => p.IsScp && p.IsAlive);
+            var cis = Player.List.Count(p => p.LeadingTeam == LeadingTeam.ChaosInsurgency && p.IsAlive);
+            var foundation = Player.List.Count(p => p.LeadingTeam == LeadingTeam.FacilityForces && p.IsAlive);
+            Player spy = spies.Count() == 1 ? spies[0] : null;
             if (spy != null && scps == 0 && cis == 0 && foundation > 1)
             {
                 RevealPlayer(spy);
@@ -117,9 +117,9 @@ namespace SCPPlugins.CISpies
         
         private static void ServerOnEndingRound(EndingRoundEventArgs ev)
         {
-            var spies = Exiled.API.Features.Player.List.Where(p => p.SessionVariables["IsSpy"].Equals(true) && p.IsAlive).ToArray();
-            var foundation = Exiled.API.Features.Player.List.Count(p => p.LeadingTeam == LeadingTeam.FacilityForces && p.IsAlive);
-            Exiled.API.Features.Player spy = spies.Count() == 1 ? spies[0] : null;
+            var spies = Player.List.Where(p => p.SessionVariables["IsSpy"].Equals(true) && p.IsAlive).ToArray();
+            var foundation = Player.List.Count(p => p.LeadingTeam == LeadingTeam.FacilityForces && p.IsAlive);
+            Player spy = spies.Count() == 1 ? spies[0] : null;
             if (spy == null) return; //if no spy is alive dont handle the event
             if (foundation == 1) //if only spy is alive
             {
@@ -130,7 +130,7 @@ namespace SCPPlugins.CISpies
         private static void ServerOnRoundStarted()
         {
             Server.SessionVariables["SpyRespawned"] = false;
-            Exiled.API.Features.Player.List.ToList().ForEach(player =>
+            Player.List.ToList().ForEach(player =>
             {
                 player.SessionVariables["IsSpy"] = false;
             });
@@ -145,7 +145,7 @@ namespace SCPPlugins.CISpies
             }
         }
 
-        public static void RevealPlayer(Exiled.API.Features.Player player)
+        public static void RevealPlayer(Player player)
         {
             if (!Round.InProgress) return;
             if (player.SessionVariables["IsSpy"].Equals(false)) return;

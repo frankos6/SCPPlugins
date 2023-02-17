@@ -1,8 +1,6 @@
 ﻿using System;
-using Exiled.API.Enums;
 using Exiled.API.Features;
 using Exiled.Events.EventArgs.Scp914;
-using Exiled.Events.Handlers;
 using Scp914;
 
 namespace SCPPlugins.SCP914RoughKill

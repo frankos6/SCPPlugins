@@ -2,7 +2,7 @@
 using System.Linq;
 using Exiled.API.Features;
 using Exiled.Events.EventArgs.Player;
-using Player = Exiled.Events.Handlers.Player;
+using Player = Exiled.API.Features.Player;
 
 namespace SCPPlugins.JoinMidRound
 {
@@ -14,16 +14,16 @@ namespace SCPPlugins.JoinMidRound
 
         public override void OnEnabled()
         {
-            Player.Joined += PlayerOnJoined;
-            Player.Left += PlayerOnLeft;
+            Exiled.Events.Handlers.Player.Joined += PlayerOnJoined;
+            Exiled.Events.Handlers.Player.Left += PlayerOnLeft;
             Exiled.Events.Handlers.Server.RoundStarted += ServerOnRoundStarted;
             base.OnEnabled();
         }
         
         public override void OnDisabled()
         {
-            Player.Joined -= PlayerOnJoined;
-            Player.Left -= PlayerOnLeft;
+            Exiled.Events.Handlers.Player.Joined -= PlayerOnJoined;
+            Exiled.Events.Handlers.Player.Left -= PlayerOnLeft;
             Exiled.Events.Handlers.Server.RoundStarted -= ServerOnRoundStarted;
             base.OnDisabled();
         }
@@ -36,7 +36,7 @@ namespace SCPPlugins.JoinMidRound
         private static void ServerOnRoundStarted()
         {
             Server.SessionVariables["LeftPlayers"] = new string[] { };
-            Exiled.API.Features.Player.List.ToList().ForEach(player =>
+            Player.List.ToList().ForEach(player =>
             {
                 player.SessionVariables["JoinedMidRound"] = false;
             });
