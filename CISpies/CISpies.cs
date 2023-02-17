@@ -48,7 +48,7 @@ namespace SCPPlugins.CISpies
             Random rng = new Random();
             if (rng.Next(0, 100) < Config.SpyChance)
             {
-                Server.SessionVariables["SpyRespawned"] = true;
+                if (Config.SpawnSpyOnce) Server.SessionVariables["SpyRespawned"] = true;
                 Player target = ev.Players[rng.Next(ev.Players.Count)];
                 target.SessionVariables["IsSpy"] = true;
                 Log.Debug($"{target.Nickname} respawned as a spy");
