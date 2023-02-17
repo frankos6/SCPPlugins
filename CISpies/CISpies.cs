@@ -4,6 +4,7 @@ using Exiled.API.Enums;
 using Exiled.API.Features;
 using Exiled.Events.EventArgs.Player;
 using Exiled.Events.EventArgs.Server;
+using PlayerRoles;
 using Respawning;
 using Utils.NonAllocLINQ;
 using Player = Exiled.Events.Handlers.Player;
@@ -21,7 +22,7 @@ namespace SCPPlugins.CISpies
         {
             Player.Joined += PlayerOnJoined;
             Player.Hurting += PlayerOnHurting;
-            Player.Dying += PlayerOnDying;
+            Player.Died += PlayerOnDied;
             Player.ChangingSpectatedPlayer += PlayerOnChangingSpectatedPlayer;
             Exiled.Events.Handlers.Server.RoundStarted += ServerOnRoundStarted;
             Exiled.Events.Handlers.Server.RespawningTeam += ServerOnRespawningTeam;
@@ -33,7 +34,7 @@ namespace SCPPlugins.CISpies
         {
             Player.Joined -= PlayerOnJoined;
             Player.Hurting -= PlayerOnHurting;
-            Player.Dying -= PlayerOnDying;
+            Player.Died -= PlayerOnDied;
             Player.ChangingSpectatedPlayer -= PlayerOnChangingSpectatedPlayer;
             Exiled.Events.Handlers.Server.RoundStarted -= ServerOnRoundStarted;
             Exiled.Events.Handlers.Server.RespawningTeam -= ServerOnRespawningTeam;
@@ -58,9 +59,18 @@ namespace SCPPlugins.CISpies
             }
         }
 
-        private static void PlayerOnDying(DyingEventArgs ev)
+        private static void PlayerOnDied(DiedEventArgs ev)
         {
             ev.Player.SessionVariables["IsSpy"] = false;
+            var spies = Exiled.API.Features.Player.List.Where(p => p.SessionVariables["IsSpy"].Equals(true) && p.IsAlive).ToArray();
+            var scps = Exiled.API.Features.Player.List.Count(p => p.IsScp && p.IsAlive);
+            var cis = Exiled.API.Features.Player.List.Count(p => p.LeadingTeam == LeadingTeam.ChaosInsurgency && p.IsAlive);
+            var foundation = Exiled.API.Features.Player.List.Count(p => p.LeadingTeam == LeadingTeam.FacilityForces && p.IsAlive);
+            Exiled.API.Features.Player spy = spies.Count() == 1 ? spies[0] : null;
+            if (spy != null && scps == 0 && cis == 0 && foundation > 1)
+            {
+                RevealPlayer(spy);
+            }
         }
 
         private static void PlayerOnHurting(HurtingEventArgs ev)
@@ -108,18 +118,13 @@ namespace SCPPlugins.CISpies
         
         private static void ServerOnEndingRound(EndingRoundEventArgs ev)
         {
-            if (ev.LeadingTeam != LeadingTeam.FacilityForces) return;
-            //if any spy is alive stop round from ending
-            if (Exiled.API.Features.Player.Dictionary.Any(pair => pair.Value.SessionVariables["IsSpy"].Equals(true)))
+            var spies = Exiled.API.Features.Player.List.Where(p => p.SessionVariables["IsSpy"].Equals(true) && p.IsAlive).ToArray();
+            var foundation = Exiled.API.Features.Player.List.Count(p => p.LeadingTeam == LeadingTeam.FacilityForces && p.IsAlive);
+            Exiled.API.Features.Player spy = spies.Count() == 1 ? spies[0] : null;
+            if (spy == null) return; //if no spy is alive dont handle the event
+            if (foundation == 1) //if only spy is alive
             {
-                ev.IsRoundEnded = false;
-            }
-            //if all alive players are spies or CIs end round with CI winning
-            var alivePlayers = Exiled.API.Features.Player.Dictionary.Where(pair => pair.Value.IsAlive);
-            if (alivePlayers.All(pair => pair.Value.SessionVariables["IsSpy"].Equals(true) || pair.Value.IsCHI))
-            {
-                ev.LeadingTeam = LeadingTeam.ChaosInsurgency;
-                ev.IsRoundEnded = true;
+                RevealPlayer(spy);
             }
         }
         
@@ -139,6 +144,15 @@ namespace SCPPlugins.CISpies
             {
                 ev.Player.ShowHint($"{ev.NewTarget.Nickname} is a CI spy.",10f);
             }
+        }
+
+        public static void RevealPlayer(Exiled.API.Features.Player player)
+        {
+            if (!Round.InProgress) return;
+            if (player.SessionVariables["IsSpy"].Equals(false)) return;
+            player.SessionVariables["IsSpy"] = false;
+            player.Role.Set(RoleTypeId.ChaosRifleman,SpawnReason.ForceClass,RoleSpawnFlags.None);
+            player.ShowHint("You have been revealed!");
         }
     }
 }
