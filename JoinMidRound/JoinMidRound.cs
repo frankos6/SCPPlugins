@@ -2,7 +2,6 @@
 using System.Linq;
 using Exiled.API.Features;
 using Exiled.Events.EventArgs.Player;
-using Utils.NonAllocLINQ;
 using Player = Exiled.Events.Handlers.Player;
 
 namespace SCPPlugins.JoinMidRound
@@ -37,7 +36,7 @@ namespace SCPPlugins.JoinMidRound
         private static void ServerOnRoundStarted()
         {
             Server.SessionVariables["LeftPlayers"] = new string[] { };
-            Exiled.API.Features.Player.Dictionary.ForEachValue(player =>
+            Exiled.API.Features.Player.List.ToList().ForEach(player =>
             {
                 player.SessionVariables["JoinedMidRound"] = false;
             });

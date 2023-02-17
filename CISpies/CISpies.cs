@@ -6,7 +6,6 @@ using Exiled.Events.EventArgs.Player;
 using Exiled.Events.EventArgs.Server;
 using PlayerRoles;
 using Respawning;
-using Utils.NonAllocLINQ;
 using Player = Exiled.Events.Handlers.Player;
 
 namespace SCPPlugins.CISpies
@@ -131,7 +130,7 @@ namespace SCPPlugins.CISpies
         private static void ServerOnRoundStarted()
         {
             Server.SessionVariables["SpyRespawned"] = false;
-            Exiled.API.Features.Player.Dictionary.ForEachValue(player =>
+            Exiled.API.Features.Player.List.ToList().ForEach(player =>
             {
                 player.SessionVariables["IsSpy"] = false;
             });

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Exiled.API.Enums;
 using Exiled.API.Features;
 using Exiled.API.Features.Pickups;
@@ -6,7 +7,6 @@ using Exiled.CustomItems.API.Features;
 using Exiled.Events.EventArgs.Player;
 using PlayerRoles;
 using Respawning;
-using Utils.NonAllocLINQ;
 using Player = Exiled.Events.Handlers.Player;
 
 namespace SCPPlugins.DocumentsPlugin
@@ -43,7 +43,7 @@ namespace SCPPlugins.DocumentsPlugin
         
         private static void ServerOnRoundStarted()
         {
-            Exiled.API.Features.Player.Dictionary.ForEachValue(player =>
+            Exiled.API.Features.Player.List.ToList().ForEach(player =>
             {
                 player.SessionVariables["Documents"] = 0;
             });
@@ -76,7 +76,7 @@ namespace SCPPlugins.DocumentsPlugin
                 ev.Player.SessionVariables["Documents"] = 0;
                 string message = "Attention all personnel. The Foundation has secured important containment information";
                 Cassie.Message(message,isSubtitles:true);
-                Exiled.API.Features.Player.Dictionary.ForEachValue(player =>
+                Exiled.API.Features.Player.List.ToList().ForEach(player =>
                 {
                     player.Role.Set(RoleTypeId.NtfPrivate);
                 });
