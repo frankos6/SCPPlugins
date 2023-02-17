@@ -1,8 +1,6 @@
 ﻿using System;
 using CommandSystem;
-using Exiled.API.Enums;
 using Exiled.API.Features;
-using PlayerRoles;
 
 namespace SCPPlugins.CISpies
 {
@@ -33,9 +31,8 @@ namespace SCPPlugins.CISpies
             }
             if (player.IsNTF && player.SessionVariables["IsSpy"].Equals(true))
             {
-                player.Role.Set(RoleTypeId.ChaosRifleman,SpawnReason.ForceClass,RoleSpawnFlags.None);
+                CISpies.RevealPlayer(player);
                 response = "You have been revealed.";
-                player.ShowHint("You have been revealed!");
                 return true;
             }
             response = "xd";
