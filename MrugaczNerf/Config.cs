@@ -1,4 +1,5 @@
-﻿using Exiled.API.Interfaces;
+﻿using System.ComponentModel;
+using Exiled.API.Interfaces;
 
 namespace SCPPlugins.MrugaczNerf
 {
@@ -6,6 +7,7 @@ namespace SCPPlugins.MrugaczNerf
     {
         public bool IsEnabled { get; set; }
         public bool Debug { get; set; }
+        [Description("The increased Blink duration (in seconds)")]
         public float BlinkCooldown { get; set; } = 5;
     }
 }

@@ -25,7 +25,7 @@ namespace SCPPlugins.JoinMidRound
             {
                 throw new Exception("Could not get LeftPlayers from session variables");
             }
-            if (list.Contains(player.UserId))
+            if (list.Contains(player.UserId)) //anti-abuse system
             {
                 response = "You already died this round, didn't you?";
                 return false;

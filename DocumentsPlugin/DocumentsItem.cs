@@ -20,10 +20,11 @@ namespace SCPPlugins.DocumentsPlugin
 
         public override string Description { get; set; } =
             "Important research documents. Steal all 4 of them to win the round!";
-        public override float Weight { get; set; } = 10.0f;
+        public override float Weight { get; set; } = 10.0f; //controls item pickup time
         public override Vector3 Scale { get; set; } = new Vector3(4.5f,1.7f,4.5f);
         
-        //TODO: replace with a couple presets
+        //defines where the item can spawn
+        //TODO: replace with a couple of presets
         public override SpawnProperties SpawnProperties { get; set; } = new SpawnProperties
         {
             Limit = 4,
@@ -114,7 +115,7 @@ namespace SCPPlugins.DocumentsPlugin
             {
                 ev.Player.ShowHint("Only Scientists or Guards can pick this up.");
                 ev.IsAllowed = false;
-                Timing.CallDelayed(3f, () => ev.IsAllowed = true);
+                Timing.CallDelayed(3f, () => ev.IsAllowed = true); //prevents player from being unable to pickup the item ever again
             }
             else
             {
@@ -129,7 +130,7 @@ namespace SCPPlugins.DocumentsPlugin
                 }
                 else
                 {
-                    if (count >= 4)
+                    if (count >= 4) //players can only have 4 documents at once
                     {
                         ev.IsAllowed = false;
                         ev.Player.ShowHint("You already have all 4 documents.");
