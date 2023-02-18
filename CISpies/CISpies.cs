@@ -80,6 +80,7 @@ namespace SCPPlugins.CISpies
         private static void PlayerOnHurting(HurtingEventArgs ev)
         {
             if (ev.Attacker == null) return; //prevents errors in console
+            if (ev.Attacker == ev.Player) return; //dont handle self-harm
             if (!ev.Player.TryGetSessionVariable("IsSpy", out bool playerIsSpy))
             {
                 //Log.Error($"Could not get IsSpy variable from {ev.Player.Nickname}");
