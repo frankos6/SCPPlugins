@@ -52,7 +52,7 @@ namespace SCPPlugins.JoinMidRound
             {
                 throw new Exception("Could not get LeftPlayers from session variables");
             }
-            Server.SessionVariables["LeftPlayers"] = list.Append(ev.Player.UserId).ToArray();
+            Server.SessionVariables["LeftPlayers"] = list.Append(ev.Player.UserId).ToArray(); //anti-abuse system
         }
     }
 }
