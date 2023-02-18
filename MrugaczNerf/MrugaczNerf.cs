@@ -39,22 +39,22 @@ namespace SCPPlugins.MrugaczNerf
         private static void PlayerOnInteractingDoor(InteractingDoorEventArgs ev)
         {
             if (ev.Door.Room.Type != RoomType.HczEzCheckpointA && ev.Door.Room.Type != RoomType.HczEzCheckpointB) return; //check for entrance zone checkpoints
-            if (ev.Player.Role == RoleTypeId.Scientist || ev.Player.Role == RoleTypeId.ClassD) //check for Class D or scitentist
+            if (ev.Player.Role == RoleTypeId.Scientist || ev.Player.Role == RoleTypeId.ClassD) //check for Class D or scientist
             {
-                Server.SessionVariables["LateGame"] = true;
+                Server.SessionVariables["EarlyGame"] = false;
             }
         }
         
         /// <inheritdoc cref="Exiled.Events.Handlers.Scp173.OnBlinking"/>
         private void Scp173OnBlinking(BlinkingEventArgs ev)
         {
-            ev.BlinkCooldown = Server.SessionVariables["LateGame"].Equals(false) ? Config.BlinkCooldown : Scp173BlinkTimer.CooldownBaseline; //set next blink cooldown
+            ev.BlinkCooldown = Server.SessionVariables["EarlyGame"].Equals(true) ? Config.BlinkCooldown : Scp173BlinkTimer.CooldownBaseline; //set next blink cooldown
         }
         
         /// <inheritdoc cref="Exiled.Events.Handlers.Server.OnRoundStarted"/>
         private static void ServerOnRoundStarted()
         {
-            Server.SessionVariables["LateGame"] = false;
+            Server.SessionVariables["EarlyGame"] = true;
         }
     }
 }
