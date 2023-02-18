@@ -28,11 +28,13 @@ namespace SCPPlugins.JoinMidRound
             base.OnDisabled();
         }
         
+        /// <inheritdoc cref="Exiled.Events.Handlers.Player.OnJoined"/>
         private static void PlayerOnJoined(JoinedEventArgs ev)
         {
             ev.Player.SessionVariables["JoinedMidRound"] = Round.InProgress;
         }
         
+        /// <inheritdoc cref="Exiled.Events.Handlers.Server.OnRoundStarted"/>
         private static void ServerOnRoundStarted()
         {
             Server.SessionVariables["LeftPlayers"] = new string[] { };
@@ -42,6 +44,7 @@ namespace SCPPlugins.JoinMidRound
             });
         }
         
+        /// <inheritdoc cref="Exiled.Events.Handlers.Player.OnLeft"/>
         private static void PlayerOnLeft(LeftEventArgs ev)
         {
             if (!Round.InProgress) return;

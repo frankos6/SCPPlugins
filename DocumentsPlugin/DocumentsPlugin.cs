@@ -41,6 +41,7 @@ namespace SCPPlugins.DocumentsPlugin
             base.OnDisabled();
         }
         
+        /// <inheritdoc cref="Exiled.Events.Handlers.Server.OnRoundStarted"/>
         private static void ServerOnRoundStarted()
         {
             Player.List.ToList().ForEach(player =>
@@ -49,6 +50,7 @@ namespace SCPPlugins.DocumentsPlugin
             });
         }
 
+        /// <inheritdoc cref="Exiled.Events.Handlers.Player.OnHandcuffing"/>
         private static void PlayerOnHandcuffing(HandcuffingEventArgs ev)
         {
             if (ev.Target.Role != RoleTypeId.Scientist && ev.Target.Role != RoleTypeId.FacilityGuard) return;
@@ -64,6 +66,7 @@ namespace SCPPlugins.DocumentsPlugin
             }
         }
 
+        /// <inheritdoc cref="Exiled.Events.Handlers.Player.OnEscaping"/>
         private static void PlayerOnEscaping(EscapingEventArgs ev)
         {
             if (ev.Player.Role != RoleTypeId.Scientist && ev.Player.Role != RoleTypeId.FacilityGuard) return;
@@ -92,6 +95,7 @@ namespace SCPPlugins.DocumentsPlugin
             }
         }
 
+        /// <inheritdoc cref="Exiled.Events.Handlers.Player.OnDying"/>
         private static void PlayerOnDying(DyingEventArgs ev)
         {
             if (ev.Player.Role != RoleTypeId.Scientist && ev.Player.Role != RoleTypeId.FacilityGuard) return;
@@ -107,12 +111,14 @@ namespace SCPPlugins.DocumentsPlugin
             }
         }
 
+        /// <inheritdoc cref="Exiled.Events.Handlers.Player.OnJoined"/>
         private static void PlayerOnJoined(JoinedEventArgs ev)
         {
             ev.Player.SessionVariables["Documents"] = 0;
         }
         
         //used to handle guards escaping
+        /// <inheritdoc cref="Exiled.Events.Handlers.Player.OnJumping"/>
         private static void PlayerOnJumping(JumpingEventArgs ev)
         {
             if (ev.Player.Role != RoleTypeId.FacilityGuard) return; //use only for guards

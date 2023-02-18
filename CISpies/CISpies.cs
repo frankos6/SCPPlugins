@@ -41,6 +41,7 @@ namespace SCPPlugins.CISpies
             base.OnDisabled();
         }
         
+        /// <inheritdoc cref="Exiled.Events.Handlers.Server.OnRespawningTeam"/>
         private void ServerOnRespawningTeam(RespawningTeamEventArgs ev)
         {
             if (ev.NextKnownTeam == SpawnableTeamType.ChaosInsurgency) return;
@@ -57,7 +58,8 @@ namespace SCPPlugins.CISpies
                                 "Friendly fire against CI's is reduced",10f);
             }
         }
-
+        
+        /// <inheritdoc cref="Exiled.Events.Handlers.Player.OnDied"/>
         private static void PlayerOnDied(DiedEventArgs ev)
         {
             ev.Player.SessionVariables["IsSpy"] = false;
@@ -72,6 +74,7 @@ namespace SCPPlugins.CISpies
             }
         }
 
+        /// <inheritdoc cref="Exiled.Events.Handlers.Player.OnHurting"/>
         private static void PlayerOnHurting(HurtingEventArgs ev)
         {
             if (ev.Attacker == null) return;
@@ -110,11 +113,13 @@ namespace SCPPlugins.CISpies
             }
         }
 
+        /// <inheritdoc cref="Exiled.Events.Handlers.Player.OnJoined"/>
         private static void PlayerOnJoined(JoinedEventArgs ev)
         {
             ev.Player.SessionVariables["IsSpy"] = false;
         }
         
+        /// <inheritdoc cref="Exiled.Events.Handlers.Server.OnEndingRound"/>
         private static void ServerOnEndingRound(EndingRoundEventArgs ev)
         {
             var spies = Player.List.Where(p => p.SessionVariables["IsSpy"].Equals(true) && p.IsAlive).ToArray();
@@ -127,6 +132,7 @@ namespace SCPPlugins.CISpies
             }
         }
         
+        /// <inheritdoc cref="Exiled.Events.Handlers.Server.OnRoundStarted"/>
         private static void ServerOnRoundStarted()
         {
             Server.SessionVariables["SpyRespawned"] = false;
@@ -136,6 +142,7 @@ namespace SCPPlugins.CISpies
             });
         }
         
+        /// <inheritdoc cref="Exiled.Events.Handlers.Player.OnChangingSpectatedPlayer"/>
         private static void PlayerOnChangingSpectatedPlayer(ChangingSpectatedPlayerEventArgs ev)
         {
             if (ev.NewTarget == null) return;
@@ -145,6 +152,10 @@ namespace SCPPlugins.CISpies
             }
         }
 
+        /// <summary>
+        /// Reveals a <see cref="Exiled.API.Features.Player"/> if they are a spy
+        /// </summary>
+        /// <param name="player">The <see cref="Exiled.API.Features.Player"/> to try to reveal</param>
         public static void RevealPlayer(Player player)
         {
             if (!Round.InProgress) return;

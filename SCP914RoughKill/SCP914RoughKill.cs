@@ -24,6 +24,7 @@ namespace SCPPlugins.SCP914RoughKill
             base.OnDisabled();
         }
         
+        /// <inheritdoc cref="Exiled.Events.Handlers.Scp914.OnUpgradingPlayer"/>
         private void Scp914OnUpgradingPlayer(UpgradingPlayerEventArgs ev)
         {
             if (ev.KnobSetting != Scp914KnobSetting.Rough) return;
