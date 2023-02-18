@@ -7,6 +7,7 @@
 - [JoinMidRound](JoinMidRound)
 - [MrugaczNerf](MrugaczNerf)
 - [SCP914RoughKill](SCP914RoughKill)
+- [NotifySCP096Targets](NotifySCP096Targets)
 
 ### Credits
 - [@Exiled-Team](https://github.com/Exiled-Team) for creating EXILED
