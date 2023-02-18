@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MrugaczNerf", "MrugaczNerf\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SCP914RoughKill", "SCP914RoughKill\SCP914RoughKill.csproj", "{BD3C8DCD-56E8-4311-AF39-CAB012DA0B64}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotifySCP096Targets", "NotifySCP096Targets\NotifySCP096Targets.csproj", "{CADBA550-2937-4BED-90CE-7145C39B5541}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{BD3C8DCD-56E8-4311-AF39-CAB012DA0B64}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD3C8DCD-56E8-4311-AF39-CAB012DA0B64}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD3C8DCD-56E8-4311-AF39-CAB012DA0B64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CADBA550-2937-4BED-90CE-7145C39B5541}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CADBA550-2937-4BED-90CE-7145C39B5541}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CADBA550-2937-4BED-90CE-7145C39B5541}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CADBA550-2937-4BED-90CE-7145C39B5541}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
