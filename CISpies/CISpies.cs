@@ -69,10 +69,12 @@ namespace SCPPlugins.CISpies
             var scps = Player.List.Count(p => p.IsScp && p.IsAlive);
             var cis = Player.List.Count(p => p.LeadingTeam == LeadingTeam.ChaosInsurgency && p.IsAlive);
             var foundation = Player.List.Count(p => p.LeadingTeam == LeadingTeam.FacilityForces && p.IsAlive);
-            Player spy = spies.Count() == 1 ? spies[0] : null;
-            if (spy != null && scps == 0 && cis == 0 && foundation > 1)
+            if (spies.Length > 0 && scps == 0 && cis == 0 && foundation > spies.Length)
             {
-                RevealPlayer(spy); //reveal spy if only MTF's are alive
+                foreach (var spy in spies)
+                {
+                    RevealPlayer(spy); //reveal all spies if only MTF's are alive
+                }
             }
         }
 
@@ -129,11 +131,13 @@ namespace SCPPlugins.CISpies
             var spies = Player.List.Where(p => p.SessionVariables["IsSpy"].Equals(true) && p.IsAlive).ToArray();
             //count alive MTF's
             var foundation = Player.List.Count(p => p.LeadingTeam == LeadingTeam.FacilityForces && p.IsAlive);
-            Player spy = spies.Count() == 1 ? spies[0] : null;
-            if (spy == null) return; //if no spy is alive dont handle the event
-            if (foundation == 1) //if only spy is alive
+            if (spies.Length == 0) return; //if no spy is alive dont handle the event
+            if (foundation == spies.Length) //if only spies are alive
             {
-                RevealPlayer(spy);
+                foreach (var spy in spies)
+                {
+                    RevealPlayer(spy);
+                }
             }
         }
         
