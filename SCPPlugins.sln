@@ -12,6 +12,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SCP914RoughKill", "SCP914Ro
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotifySCP096Targets", "NotifySCP096Targets\NotifySCP096Targets.csproj", "{CADBA550-2937-4BED-90CE-7145C39B5541}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PinkCandy", "PinkCandy\PinkCandy.csproj", "{C3EDAB98-E018-4CE8-8F38-4152034258EE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +44,9 @@ Global
 		{CADBA550-2937-4BED-90CE-7145C39B5541}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CADBA550-2937-4BED-90CE-7145C39B5541}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CADBA550-2937-4BED-90CE-7145C39B5541}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3EDAB98-E018-4CE8-8F38-4152034258EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3EDAB98-E018-4CE8-8F38-4152034258EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3EDAB98-E018-4CE8-8F38-4152034258EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3EDAB98-E018-4CE8-8F38-4152034258EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
