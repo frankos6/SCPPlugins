@@ -9,6 +9,7 @@
 - [SCP914RoughKill](SCP914RoughKill)
 - [NotifySCP096Targets](NotifySCP096Targets)
 - [PinkCandy](PinkCandy)
+- [ModifyScpPreferences](ModifyScpPreferences)
 
 ### Credits
 - [@Exiled-Team](https://github.com/Exiled-Team) for creating EXILED
