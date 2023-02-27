@@ -7,6 +7,8 @@ using Exiled.Events.EventArgs.Server;
 using PlayerRoles;
 using Respawning;
 using Player = Exiled.API.Features.Player;
+using MEC;
+using System.Collections.Generic;
 
 namespace SCPPlugins.CISpies
 {
@@ -144,6 +146,7 @@ namespace SCPPlugins.CISpies
         /// <inheritdoc cref="Exiled.Events.Handlers.Server.OnRoundStarted"/>
         private static void ServerOnRoundStarted()
         {
+            Timing.RunCoroutine(NotifySpiesCoroutine());
             Server.SessionVariables["SpyRespawned"] = false;
             Player.List.ToList().ForEach(player =>
             {
@@ -172,6 +175,23 @@ namespace SCPPlugins.CISpies
             player.SessionVariables["IsSpy"] = false;
             player.Role.Set(RoleTypeId.ChaosRifleman,SpawnReason.ForceClass,RoleSpawnFlags.None); //Change class to CI Rifleman, keep inventory, don't use default spawnpoint
             player.ShowHint("You have been revealed!");
+        }
+
+        /// <summary>
+        /// Periodically notifies any spy <see cref="Exiled.API.Features.Player"/> that they are a spy
+        /// </summary>
+        private static IEnumerator<float> NotifySpiesCoroutine()
+        {
+            while (true)
+            {
+                if (Round.IsEnded) yield break;
+                var spies = Player.List.Where(p => p.SessionVariables["IsSpy"].Equals(true) && p.IsAlive).ToArray();
+                foreach (var spy in spies)
+                {
+                    spy.ShowHint("Remember that you are a CI spy!",5f);
+                }
+                yield return Timing.WaitForSeconds(30f);
+            }
         }
     }
 }
