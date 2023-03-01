@@ -10,6 +10,7 @@
 - [NotifySCP096Targets](NotifySCP096Targets)
 - [PinkCandy](PinkCandy)
 - [ModifyScpPreferences](ModifyScpPreferences)
+- [RespawnWaveInfo](RespawnWaveInfo)
 
 ### Credits
 - [@Exiled-Team](https://github.com/Exiled-Team) for creating EXILED
