@@ -92,6 +92,7 @@
         <Compile Include="CISpies.cs" />
         <Compile Include="Commands.cs" />
         <Compile Include="Config.cs" />
+        <Compile Include="Enums\ModifierType.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
     <ItemGroup>
