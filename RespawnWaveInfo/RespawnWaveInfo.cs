@@ -36,15 +36,25 @@ namespace SCPPlugins.RespawnWaveInfo
         {
             while (true)
             {
+                string message;
                 if (Round.IsEnded) yield break;
-                var spectators = Player.List.Where(p => p.Role == RoleTypeId.Spectator).ToList();
+                var spectators = Player.List.Where(p => p.Role == RoleTypeId.Spectator).ToArray();
                 var wavetime = Respawn.TimeUntilSpawnWave;
-                var nextteam = Respawn.NextKnownTeam == SpawnableTeamType.ChaosInsurgency;
-                string team = nextteam ? "Chaos Insurgency" : "Nine-Tailed Fox";
+                string team = Respawn.NextKnownTeam == SpawnableTeamType.ChaosInsurgency
+                    ? "Chaos Insurgency" : "Nine-Tailed Fox";
+                if (Respawn.IsSpawning)
+                {
+                    message = "Time until next wave: Spawning!\n" +
+                              $"Next team: {team}";
+                }
+                else
+                {
+                    message = $"Time until next wave: {wavetime.Minutes}:{wavetime.Seconds:D2}\n" +
+                              "Next team: [REDACTED]";
+                }
                 foreach (var spec in spectators)
                 {
-                    spec.Broadcast(1,$"Time until next wave: {wavetime.Minutes}:{wavetime.Seconds:D2}\n" +
-                                     $"Next team: {team}");
+                    spec.Broadcast(1,message);
                 }
                 yield return Timing.WaitForSeconds(1);
             }
