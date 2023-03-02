@@ -50,7 +50,7 @@ namespace SCPPlugins.RespawnWaveInfo
                 else
                 {
                     message = $"Time until next wave: {wavetime.Minutes}:{wavetime.Seconds:D2}\n" +
-                              "Next team: [REDACTED]";
+                              "Next team: ███████";
                 }
                 foreach (var spec in spectators)
                 {
