@@ -1,4 +1,5 @@
-﻿using Exiled.API.Interfaces;
+﻿using System.ComponentModel;
+using Exiled.API.Interfaces;
 
 namespace SCPPlugins.JoinMidRound
 {
@@ -6,5 +7,7 @@ namespace SCPPlugins.JoinMidRound
     {
         public bool IsEnabled { get; set; } = true;
         public bool Debug { get; set; }
+        [Description("Sets the auto-respawn timer (in seconds)")] 
+        public int RespawnTimer { get; set; } = 7;
     }
 }
