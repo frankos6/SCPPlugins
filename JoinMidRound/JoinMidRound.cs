@@ -74,6 +74,12 @@ namespace SCPPlugins.JoinMidRound
             ev.Player.SessionVariables["JoinedMidRound"] = Round.InProgress;
             //this event is used to ensure that the player will see the hints
             if (!Round.InProgress) return;
+            if (!Server.TryGetSessionVariable("LeftPlayers", out string[] list))
+            {
+                throw new Exception("Could not get LeftPlayers from session variables");
+            }
+            if (list.Contains(ev.Player.UserId)) return;
+            if (Round.ElapsedTime.TotalSeconds > 120) return;
             _respawnCoroutines.Add(ev.Player,Timing.RunCoroutine(RespawnCoroutine(ev.Player)));
         }
         
@@ -81,7 +87,7 @@ namespace SCPPlugins.JoinMidRound
         /// Respawns a player after a delay, cancellable with voice chat key
         /// </summary>
         /// <param name="player">The player to respawn</param>
-        public IEnumerator<float> RespawnCoroutine(Player player)
+        private IEnumerator<float> RespawnCoroutine(Player player)
         {
             for (int i = Config.RespawnTimer; i > 0; i--)
             {
