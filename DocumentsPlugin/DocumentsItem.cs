@@ -33,11 +33,6 @@ namespace SCPPlugins.DocumentsPlugin
                 new DynamicSpawnPoint
                 {
                     Chance = 50,
-                    Location = SpawnLocationType.Inside012Locker
-                },
-                new DynamicSpawnPoint
-                {
-                    Chance = 50,
                     Location = SpawnLocationType.Inside173Armory
                 },
                 new DynamicSpawnPoint

@@ -64,7 +64,7 @@ namespace SCPPlugins.DocumentsPlugin
                 player.SessionVariables["Documents"] = 0;
                 for (int i = count; i > 0; i--)
                 {
-                    CustomItem.TrySpawn(1, player.Position, out Pickup pickup);
+                    CustomItem.TrySpawn((uint)1, player.Position, out Pickup pickup);
                     Log.Debug($"Spawned Documents at {pickup.Position} (dropped by {player.Nickname})");
                 }
                 response = $"Dropped {count} documents.";
@@ -80,7 +80,7 @@ namespace SCPPlugins.DocumentsPlugin
                 if (arg >= count) arg = count;
                 player.SessionVariables["Documents"] = count - arg;
                 for (int i = arg; i > 0; i--) { 
-                    CustomItem.TrySpawn(1, player.Position, out Pickup pickup); 
+                    CustomItem.TrySpawn((uint)1, player.Position, out Pickup pickup); 
                     Log.Debug($"Spawned Documents at {pickup.Position} (dropped by {player.Nickname})");
                 }
                 response = $"Dropped {arg} documents.";

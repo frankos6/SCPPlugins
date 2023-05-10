@@ -61,7 +61,7 @@ namespace SCPPlugins.DocumentsPlugin
             ev.Target.SessionVariables["Documents"] = 0;
             for (int i = count; i > 0; i--) //drop all documents
             {
-                CustomItem.TrySpawn(1, ev.Target.Position, out Pickup pickup);
+                CustomItem.TrySpawn((uint)1, ev.Target.Position, out Pickup pickup);
                 Log.Debug($"Spawned Documents at {pickup.Position} (dropped by {ev.Target.Nickname} on being cuffed)");
             }
         }
@@ -89,7 +89,7 @@ namespace SCPPlugins.DocumentsPlugin
                 ev.Player.SessionVariables["Documents"] = 0;
                 for (int i = count; i > 0; i--) //drop all documents
                 {
-                    CustomItem.TrySpawn(1, ev.Player.Position, out Pickup pickup);
+                    CustomItem.TrySpawn((uint)1, ev.Player.Position, out Pickup pickup);
                     Log.Debug($"Spawned Documents at {pickup.Position} (dropped by {ev.Player.Nickname} on escape)");
                 }
             }
@@ -106,7 +106,7 @@ namespace SCPPlugins.DocumentsPlugin
             ev.Player.SessionVariables["Documents"] = 0;
             for (int i = count; i > 0; i--) //drop all documents
             {
-                CustomItem.TrySpawn(1, ev.Player.Position, out Pickup pickup);
+                CustomItem.TrySpawn((uint)1, ev.Player.Position, out Pickup pickup);
                 Log.Debug($"Spawned Documents at {pickup.Position} (dropped by {ev.Player.Nickname} on death)");
             }
         }
