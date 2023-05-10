@@ -9,7 +9,7 @@ namespace SCPPlugins.ModifyScpPreferences
         public bool Debug { get; set; }
 
         [Description("SCP-049 preference setting\n" +
-                     "Should be between -5 and 5, if not will default to players' custom preferences")]
+                     "  # Should be between -5 and 5, if not will default to players' custom preferences")]
         public int Scp049 { get; set; }
 
         [Description("SCP-079 preference setting")]
@@ -28,7 +28,7 @@ namespace SCPPlugins.ModifyScpPreferences
         public int Scp939 { get; set; }
 
         [Description("List of players who ignore this plugin\n" +
-                     "UserID format is SteamId64Here@steam, DiscordUserIDHere@discord, etc...")]
+                     "  # UserID format is SteamId64Here@steam, DiscordUserIDHere@discord, etc...")]
         public string[] IgnoredPlayers { get; set; } = { "SomeSteamId64@steam" };
     }
 }
