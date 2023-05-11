@@ -39,7 +39,7 @@
           <HintPath>..\packages\EXILED.7.0.0-rc.1-2\lib\net48\Assembly-CSharp-Publicized.dll</HintPath>
         </Reference>
         <Reference Include="Assembly-CSharp-firstpass">
-          <HintPath>V:\scp_sl\SCPSL_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
+          <HintPath>..\lib\Assembly-CSharp-firstpass.dll</HintPath>
         </Reference>
         <Reference Include="CommandSystem.Core, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
           <HintPath>..\packages\EXILED.7.0.0-rc.1-2\lib\net48\CommandSystem.Core.dll</HintPath>
@@ -79,7 +79,7 @@
         <Reference Include="System.Data" />
         <Reference Include="System.Xml" />
         <Reference Include="UnityEngine.CoreModule">
-          <HintPath>V:\scp_sl\SCPSL_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+          <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\SCP Secret Laboratory Dedicated Server\SCPSL_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
         </Reference>
     </ItemGroup>
     <ItemGroup>
