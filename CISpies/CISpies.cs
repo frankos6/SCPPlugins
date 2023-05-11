@@ -78,19 +78,6 @@ namespace SCPPlugins.CISpies
         private static void PlayerOnDied(DiedEventArgs ev)
         {
             ev.Player.SessionVariables["IsSpy"] = false;
-            //get alive spies
-            var spies = Player.List.Where(p => p.SessionVariables["IsSpy"].Equals(true) && p.IsAlive).ToArray();
-            //count alive players by team
-            var scps = Player.List.Count(p => p.IsScp && p.IsAlive);
-            var cis = Player.List.Count(p => p.LeadingTeam == LeadingTeam.ChaosInsurgency && p.IsAlive);
-            var foundation = Player.List.Count(p => p.LeadingTeam == LeadingTeam.FacilityForces && p.IsAlive);
-            if (spies.Length > 0 && scps == 0 && cis == 0 && foundation > spies.Length)
-            {
-                foreach (var spy in spies)
-                {
-                    RevealPlayer(spy); //reveal all spies if only MTF's are alive
-                }
-            }
         }
 
         /// <inheritdoc cref="Exiled.Events.Handlers.Player.OnHurting"/>
@@ -142,17 +129,16 @@ namespace SCPPlugins.CISpies
         /// <inheritdoc cref="Exiled.Events.Handlers.Server.OnEndingRound"/>
         private static void ServerOnEndingRound(EndingRoundEventArgs ev)
         {
-            //get all spies
-            var spies = Player.List.Where(p => p.SessionVariables["IsSpy"].Equals(true) && p.IsAlive).ToArray();
-            //count alive MTF's
-            var foundation = Player.List.Count(p => p.LeadingTeam == LeadingTeam.FacilityForces && p.IsAlive);
-            if (spies.Length == 0) return; //if no spy is alive dont handle the event
-            if (foundation == spies.Length) //if only spies are alive
+            //don't end round if any spies are alive with only MTF's
+            if (Player.List.Any(x => x.SessionVariables["IsSpy"].Equals(true)) && ev.LeadingTeam == LeadingTeam.FacilityForces)
             {
-                foreach (var spy in spies)
-                {
-                    RevealPlayer(spy);
-                }
+                ev.IsRoundEnded = false;
+            }
+            //assign the right team the win if only spies are alive
+            if (!Player.List.Any(x => x.IsNTF && x.SessionVariables["IsSpy"].Equals(false)))
+            {
+                ev.LeadingTeam = Round.EscapedDClasses == 0 && Player.List.Any(x=>x.IsScp) ? LeadingTeam.Anomalies : LeadingTeam.ChaosInsurgency;
+                ev.IsRoundEnded = Player.List.All(x=>x.Role != RoleTypeId.ClassD && x.Role != RoleTypeId.Scientist); //dont end round if d/scientists are alive
             }
         }
         
@@ -198,7 +184,7 @@ namespace SCPPlugins.CISpies
             while (true)
             {
                 if (Round.IsEnded) yield break;
-                var spies = Player.List.Where(p => p.SessionVariables["IsSpy"].Equals(true) && p.IsAlive).ToArray();
+                var spies = Player.List.Where(p => p.SessionVariables["IsSpy"].Equals(true) && p.IsAlive);
                 foreach (var spy in spies)
                 {
                     spy.ShowHint("Remember that you are a CI spy!",5f);
