@@ -138,7 +138,7 @@ namespace SCPPlugins.CISpies
             if (!Player.List.Any(x => x.IsNTF && x.SessionVariables["IsSpy"].Equals(false)))
             {
                 ev.LeadingTeam = Round.EscapedDClasses == 0 && Player.List.Any(x=>x.IsScp) ? LeadingTeam.Anomalies : LeadingTeam.ChaosInsurgency;
-                ev.IsRoundEnded = true;
+                ev.IsRoundEnded = Player.List.All(x=>x.Role != RoleTypeId.ClassD && x.Role != RoleTypeId.Scientist); //dont end round if d/scientists are alive
             }
         }
         
