@@ -36,7 +36,7 @@
     </PropertyGroup>
     <ItemGroup>
         <Reference Include="Assembly-CSharp">
-          <HintPath>V:\scp_sl\SCPSL_Data\Managed\Assembly-CSharp.dll</HintPath>
+          <HintPath>..\packages\EXILED.7.0.0-rc.1-2\lib\net48\Assembly-CSharp-Publicized.dll</HintPath>
         </Reference>
         <Reference Include="Assembly-CSharp-firstpass">
           <HintPath>V:\scp_sl\SCPSL_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
