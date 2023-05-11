@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using Exiled.API.Interfaces;
+// ReSharper disable UnusedAutoPropertyAccessor.Global
 
 namespace SCPPlugins.ModifyScpPreferences
 {

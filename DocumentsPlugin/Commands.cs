@@ -1,8 +1,8 @@
 ﻿using System;
 using CommandSystem;
 using Exiled.API.Features;
-using Exiled.API.Features.Pickups;
 using Exiled.CustomItems.API.Features;
+using UnityEngine;
 
 namespace SCPPlugins.DocumentsPlugin
 {
@@ -20,7 +20,7 @@ namespace SCPPlugins.DocumentsPlugin
                 response = "The round must be in progress.";
                 return false;
             }
-            Player player = Player.Get(sender);
+            var player = Player.Get(sender);
             if (!player.TryGetSessionVariable("Documents", out int count))
             {
                 throw new Exception($"Could not get Documents variable from {player.Nickname}");
@@ -44,12 +44,12 @@ namespace SCPPlugins.DocumentsPlugin
                 response = "The round must be in progress.";
                 return false;
             }
-            Player player = Player.Get(sender);
+            var player = Player.Get(sender);
             if (!player.TryGetSessionVariable("Documents", out int count))
             {
                 throw new Exception($"Could not get Documents variable from {player.Nickname}");
             }
-            int arg = 0;
+            var arg = 0;
             bool result;
             try
             {
@@ -62,10 +62,10 @@ namespace SCPPlugins.DocumentsPlugin
             if (!result)
             {
                 player.SessionVariables["Documents"] = 0;
-                for (int i = count; i > 0; i--)
+                for (var i = count; i > 0; i--)
                 {
-                    CustomItem.TrySpawn((uint)1, player.Position, out Pickup pickup);
-                    Log.Debug($"Spawned Documents at {pickup.Position} (dropped by {player.Nickname})");
+                    if (CustomItem.TrySpawn(1u, player.Position, out var pickup))
+                        Log.Debug($"Spawned Documents at {pickup?.Position ?? new Vector3()} (dropped by {player.Nickname})");
                 }
                 response = $"Dropped {count} documents.";
                 return true;
@@ -75,17 +75,14 @@ namespace SCPPlugins.DocumentsPlugin
                 response = "Argument must be bigger that 0.";
                 return false;
             }
-            else
-            {
-                if (arg >= count) arg = count;
-                player.SessionVariables["Documents"] = count - arg;
-                for (int i = arg; i > 0; i--) { 
-                    CustomItem.TrySpawn((uint)1, player.Position, out Pickup pickup); 
-                    Log.Debug($"Spawned Documents at {pickup.Position} (dropped by {player.Nickname})");
-                }
-                response = $"Dropped {arg} documents.";
-                return true;
+            if (arg >= count) arg = count;
+            player.SessionVariables["Documents"] = count - arg;
+            for (var i = arg; i > 0; i--) { 
+                if (CustomItem.TrySpawn(1u, player.Position, out var pickup))
+                    Log.Debug($"Spawned Documents at {pickup?.Position ?? new Vector3()} (dropped by {player.Nickname})");
             }
+            response = $"Dropped {arg} documents.";
+            return true;
         }
     }
 }

@@ -40,7 +40,7 @@ namespace SCPPlugins.RespawnWaveInfo
                 if (Round.IsEnded) yield break;
                 var spectators = Player.List.Where(p => p.Role == RoleTypeId.Spectator).ToArray();
                 var wavetime = Respawn.TimeUntilSpawnWave;
-                string team = Respawn.NextKnownTeam == SpawnableTeamType.ChaosInsurgency
+                var team = Respawn.NextKnownTeam == SpawnableTeamType.ChaosInsurgency
                     ? "Chaos Insurgency" : "Nine-Tailed Fox";
                 if (Respawn.IsSpawning)
                 {

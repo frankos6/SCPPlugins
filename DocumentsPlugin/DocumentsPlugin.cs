@@ -2,11 +2,11 @@
 using System.Linq;
 using Exiled.API.Enums;
 using Exiled.API.Features;
-using Exiled.API.Features.Pickups;
 using Exiled.CustomItems.API.Features;
 using Exiled.Events.EventArgs.Player;
 using PlayerRoles;
 using Respawning;
+using UnityEngine;
 using Player = Exiled.API.Features.Player;
 
 namespace SCPPlugins.DocumentsPlugin
@@ -59,10 +59,10 @@ namespace SCPPlugins.DocumentsPlugin
                 throw new Exception($"Could not get Documents variable from {ev.Target.Nickname}");
             }
             ev.Target.SessionVariables["Documents"] = 0;
-            for (int i = count; i > 0; i--) //drop all documents
+            for (var i = count; i > 0; i--) //drop all documents
             {
-                CustomItem.TrySpawn((uint)1, ev.Target.Position, out Pickup pickup);
-                Log.Debug($"Spawned Documents at {pickup.Position} (dropped by {ev.Target.Nickname} on being cuffed)");
+                if (CustomItem.TrySpawn(1u, ev.Target.Position, out var pickup))
+                    Log.Debug($"Spawned Documents at {pickup?.Position ?? new Vector3()} (dropped by {ev.Target.Nickname} on being cuffed)");
             }
         }
 
@@ -77,8 +77,7 @@ namespace SCPPlugins.DocumentsPlugin
             if (count == 4)
             {
                 ev.Player.SessionVariables["Documents"] = 0;
-                string message = "Attention all personnel. The Foundation has secured important containment information";
-                Cassie.Message(message,isSubtitles:true);
+                Cassie.Message("Attention all personnel. The Foundation has secured important containment information", isSubtitles:true);
                 Player.List.ToList().ForEach(player => //change each player's class (used to end the round)
                 {
                     player.Role.Set(RoleTypeId.NtfPrivate);
@@ -87,10 +86,10 @@ namespace SCPPlugins.DocumentsPlugin
             else
             {
                 ev.Player.SessionVariables["Documents"] = 0;
-                for (int i = count; i > 0; i--) //drop all documents
+                for (var i = count; i > 0; i--) //drop all documents
                 {
-                    CustomItem.TrySpawn((uint)1, ev.Player.Position, out Pickup pickup);
-                    Log.Debug($"Spawned Documents at {pickup.Position} (dropped by {ev.Player.Nickname} on escape)");
+                    if (CustomItem.TrySpawn(1u, ev.Player.Position, out var pickup))
+                        Log.Debug($"Spawned Documents at {pickup?.Position ?? new Vector3()} (dropped by {ev.Player.Nickname} on escape)");
                 }
             }
         }
@@ -104,10 +103,10 @@ namespace SCPPlugins.DocumentsPlugin
                 throw new Exception($"Could not get Documents variable from {ev.Player.Nickname}");
             }
             ev.Player.SessionVariables["Documents"] = 0;
-            for (int i = count; i > 0; i--) //drop all documents
+            for (var i = count; i > 0; i--) //drop all documents
             {
-                CustomItem.TrySpawn((uint)1, ev.Player.Position, out Pickup pickup);
-                Log.Debug($"Spawned Documents at {pickup.Position} (dropped by {ev.Player.Nickname} on death)");
+                if (CustomItem.TrySpawn(1u, ev.Player.Position, out var pickup))
+                    Log.Debug($"Spawned Documents at {pickup?.Position ?? new Vector3()} (dropped by {ev.Player.Nickname} on death)");
             }
         }
 
@@ -133,7 +132,7 @@ namespace SCPPlugins.DocumentsPlugin
                     if (count == 4)
                     {
                         ev.Player.SessionVariables["Documents"] = 0;
-                        ev.Player.Role.Set(RoleTypeId.NtfSpecialist,SpawnReason.Escaped,RoleSpawnFlags.All); //change class to MTF Specialist, add default items, use defualt spawnpoint
+                        ev.Player.Role.Set(RoleTypeId.NtfSpecialist,SpawnReason.Escaped,RoleSpawnFlags.All); //change class to MTF Specialist, add default items, use default spawnpoint
                         ev.Player.ShowHint("You have escaped with the documents.");
                         Respawn.GrantTickets(SpawnableTeamType.NineTailedFox,10); //add tickets for MTF wave
                     }

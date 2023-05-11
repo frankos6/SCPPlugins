@@ -27,7 +27,7 @@ namespace SCPPlugins.PinkCandy
         private void Scp330OnInteractingScp330(InteractingScp330EventArgs ev)
         {
             if (ev.ShouldSever) return; //dont give pink candy as 3rd candy
-            Random rng = new Random();
+            var rng = new Random();
             if (rng.Next(0, 100) < Config.PinkCandyChance)
             {
                 ev.Candy = CandyKindID.Pink;

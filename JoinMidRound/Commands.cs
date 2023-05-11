@@ -20,7 +20,7 @@ namespace SCPPlugins.JoinMidRound
                 response = "The round must be in progress.";
                 return false;
             }
-            Player player = Player.Get(sender);
+            var player = Player.Get(sender);
             if (!Server.TryGetSessionVariable("LeftPlayers", out string[] list))
             {
                 throw new Exception("Could not get LeftPlayers from session variables");

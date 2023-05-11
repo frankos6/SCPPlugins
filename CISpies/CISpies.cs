@@ -49,23 +49,25 @@ namespace SCPPlugins.CISpies
         {
             if (ev.NextKnownTeam == SpawnableTeamType.ChaosInsurgency) return; //only handle MTF spawns
             if (Server.SessionVariables["SpyRespawned"].Equals(true)) return; //check if a spy spawned this round
-            Random rng = new Random();
-            float chance = Config.SpyChance;
+            var rng = new Random();
+            var chance = Config.SpyChance;
             Log.Debug($"Base chance: {chance}");
             Log.Debug($"Modifier type: {Config.ModifierType}");
-            if (Config.ModifierType == ModifierType.PerPlayerOnline)
+            switch (Config.ModifierType)
             {
-                chance += Server.PlayerCount * Config.ChanceModifier;
-                Log.Debug($"Modified chance: {chance}");
-            } else if (Config.ModifierType == ModifierType.PerPlayerRespawning)
-            {
-                chance += ev.Players.Count * Config.ChanceModifier;
-                Log.Debug($"Modified chance: {chance}");
+                case ModifierType.PerPlayerOnline:
+                    chance += Server.PlayerCount * Config.ChanceModifier;
+                    Log.Debug($"Modified chance: {chance}");
+                    break;
+                case ModifierType.PerPlayerRespawning:
+                    chance += ev.Players.Count * Config.ChanceModifier;
+                    Log.Debug($"Modified chance: {chance}");
+                    break;
             }
             if (rng.Next(0, 100) < chance)
             {
                 if (Config.SpawnSpyOnce) Server.SessionVariables["SpyRespawned"] = true; //prevent another spy from spawning
-                Player target = ev.Players[rng.Next(ev.Players.Count)]; //choose a random spawned MTF
+                var target = ev.Players[rng.Next(ev.Players.Count)]; //choose a random spawned MTF
                 target.SessionVariables["IsSpy"] = true;
                 Log.Debug($"{target.Nickname} respawned as a spy");
                 target.ShowHint("You are a Chaos Insurgency spy!\n" +

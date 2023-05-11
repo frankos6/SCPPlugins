@@ -18,7 +18,7 @@ namespace SCPPlugins.CISpies
                 response = "The round must be in progress.";
                 return false;
             }
-            Player player = Player.Get(sender);
+            var player = Player.Get(sender);
             if (player.SessionVariables["IsSpy"].Equals(false))
             {
                 response = "You are not a spy.";

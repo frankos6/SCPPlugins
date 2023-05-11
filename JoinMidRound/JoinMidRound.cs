@@ -16,7 +16,7 @@ namespace SCPPlugins.JoinMidRound
         public override Version Version => new Version(1, 2, 0);
         public override Version RequiredExiledVersion => new Version(6, 0, 0, 0);
 
-        private Dictionary<Player, CoroutineHandle> _respawnCoroutines = new Dictionary<Player, CoroutineHandle>();
+        private readonly Dictionary<Player, CoroutineHandle> _respawnCoroutines = new Dictionary<Player, CoroutineHandle>();
 
         public override void OnEnabled()
         {
@@ -60,12 +60,10 @@ namespace SCPPlugins.JoinMidRound
         /// <inheritdoc cref="Exiled.Events.Handlers.Player.OnVoiceChatting"/>
         private void PlayerOnVoiceChatting(VoiceChattingEventArgs ev)
         {
-            if (_respawnCoroutines.ContainsKey(ev.Player))
-            {
-                Timing.KillCoroutines(_respawnCoroutines[ev.Player]);
-                ev.Player.ShowHint("Respawning was cancelled.\n" +
-                                   "You can still use the .respawn command to respawn",5f);
-            }
+            if (!_respawnCoroutines.TryGetValue(ev.Player, out var handle)) return;
+            Timing.KillCoroutines(handle);
+            ev.Player.ShowHint("Respawning was cancelled.\n" +
+                               "You can still use the .respawn command to respawn",5f);
         }
         
         /// <inheritdoc cref="Exiled.Events.Handlers.Player.OnVerified"/>
@@ -89,7 +87,7 @@ namespace SCPPlugins.JoinMidRound
         /// <param name="player">The player to respawn</param>
         private IEnumerator<float> RespawnCoroutine(Player player)
         {
-            for (int i = Config.RespawnTimer; i > 0; i--)
+            for (var i = Config.RespawnTimer; i > 0; i--)
             {
                 player.ShowHint($"You will be respawned as Class D in {i} seconds!\n" +
                                 "Use the voice chat key to cancel",1f);
