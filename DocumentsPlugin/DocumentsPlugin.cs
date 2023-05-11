@@ -23,7 +23,6 @@ namespace SCPPlugins.DocumentsPlugin
             Exiled.Events.Handlers.Player.Dying += PlayerOnDying;
             Exiled.Events.Handlers.Player.Escaping += PlayerOnEscaping;
             Exiled.Events.Handlers.Player.Handcuffing += PlayerOnHandcuffing;
-            Exiled.Events.Handlers.Player.Jumping += PlayerOnJumping;
             Exiled.Events.Handlers.Server.RoundStarted += ServerOnRoundStarted;
             CustomItem.RegisterItems();
             base.OnEnabled();
@@ -35,7 +34,6 @@ namespace SCPPlugins.DocumentsPlugin
             Exiled.Events.Handlers.Player.Dying -= PlayerOnDying;
             Exiled.Events.Handlers.Player.Escaping -= PlayerOnEscaping;
             Exiled.Events.Handlers.Player.Handcuffing -= PlayerOnHandcuffing;
-            Exiled.Events.Handlers.Player.Jumping -= PlayerOnJumping;
             Exiled.Events.Handlers.Server.RoundStarted -= ServerOnRoundStarted;
             CustomItem.UnregisterItems();
             base.OnDisabled();
@@ -76,20 +74,38 @@ namespace SCPPlugins.DocumentsPlugin
             }
             if (count == 4)
             {
-                ev.Player.SessionVariables["Documents"] = 0;
-                Cassie.Message("Attention all personnel. The Foundation has secured important containment information", isSubtitles:true);
-                Player.List.ToList().ForEach(player => //change each player's class (used to end the round)
+                if (ev.Player.Role == RoleTypeId.Scientist)
                 {
-                    player.Role.Set(RoleTypeId.NtfPrivate);
-                });
+                    ev.Player.SessionVariables["Documents"] = 0;
+                    Cassie.Message("Attention all personnel. The Foundation has secured important containment information", isSubtitles:true);
+                    Player.List.ToList().ForEach(player => //change each player's class (used to end the round)
+                    {
+                        player.Role.Set(RoleTypeId.NtfPrivate);
+                    });
+                } 
+                else 
+                {
+                    ev.Player.SessionVariables["Documents"] = 0;
+                    ev.NewRole = RoleTypeId.NtfSpecialist;
+                    ev.EscapeScenario = EscapeScenario.Scientist;
+                    ev.IsAllowed = true;
+                    Respawn.GrantTickets(SpawnableTeamType.NineTailedFox,10); //add tickets for MTF wave
+                }
             }
             else
             {
-                ev.Player.SessionVariables["Documents"] = 0;
-                for (var i = count; i > 0; i--) //drop all documents
+                if (ev.Player.Role == RoleTypeId.Scientist)
                 {
-                    if (CustomItem.TrySpawn(1u, ev.Player.Position, out var pickup))
-                        Log.Debug($"Spawned Documents at {pickup?.Position ?? new Vector3()} (dropped by {ev.Player.Nickname} on escape)");
+                    ev.Player.SessionVariables["Documents"] = 0;
+                    for (var i = count; i > 0; i--) //drop all documents
+                    {
+                        if (CustomItem.TrySpawn(1u, ev.Player.Position, out var pickup))
+                            Log.Debug($"Spawned Documents at {pickup?.Position ?? new Vector3()} (dropped by {ev.Player.Nickname} on escape)");
+                    }
+                }
+                else
+                {
+                    ev.Player.ShowHint("You must have all 4 documents to escape.");
                 }
             }
         }
@@ -114,34 +130,6 @@ namespace SCPPlugins.DocumentsPlugin
         private static void PlayerOnJoined(JoinedEventArgs ev)
         {
             ev.Player.SessionVariables["Documents"] = 0;
-        }
-        
-        //used to handle guards escaping
-        /// <inheritdoc cref="Exiled.Events.Handlers.Player.OnJumping"/>
-        private static void PlayerOnJumping(JumpingEventArgs ev)
-        {
-            if (ev.Player.Role != RoleTypeId.FacilityGuard) return; //use only for guards
-            if (ev.Player.Position.x >= 121.4 && ev.Player.Position.x <= 133.3) //escape area x coordinates (should stay the same between rounds)
-            {
-                if (ev.Player.Position.z >= 18.6 && ev.Player.Position.z <= 28.9) //escape area z coordinates
-                {
-                    if (!ev.Player.TryGetSessionVariable("Documents", out int count)) //safe way to get document count
-                    {
-                        throw new Exception($"Could not get Documents variable from {ev.Player.Nickname}");
-                    }
-                    if (count == 4)
-                    {
-                        ev.Player.SessionVariables["Documents"] = 0;
-                        ev.Player.Role.Set(RoleTypeId.NtfSpecialist,SpawnReason.Escaped,RoleSpawnFlags.All); //change class to MTF Specialist, add default items, use default spawnpoint
-                        ev.Player.ShowHint("You have escaped with the documents.");
-                        Respawn.GrantTickets(SpawnableTeamType.NineTailedFox,10); //add tickets for MTF wave
-                    }
-                    else
-                    {
-                        ev.Player.ShowHint("You must have all 4 documents to escape.");
-                    }
-                }
-            }
         }
         
     }
