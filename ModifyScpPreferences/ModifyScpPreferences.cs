@@ -11,7 +11,7 @@ namespace SCPPlugins.ModifyScpPreferences
     {
         public override string Author => "frankos6";
         public override Version Version => new Version(Assembly.GetCustomAttribute<AssemblyFileVersionAttribute>()?.Version ?? "1.3.0");
-        public override Version RequiredExiledVersion => new Version(6, 0, 0, 0);
+        public override Version RequiredExiledVersion => new Version(7, 0, 0, 0);
 
         public override void OnEnabled()
         {
