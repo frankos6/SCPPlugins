@@ -11,10 +11,12 @@ namespace SCPPlugins.PinkCandy
         public override string Author => "frankos6";
         public override Version Version => new Version(1, 2, 0);
         public override Version RequiredExiledVersion => new Version(6, 0, 0, 0);
+        private Random _rng;
 
         public override void OnEnabled()
         {
             Scp330.InteractingScp330 += Scp330OnInteractingScp330;
+            _rng = new Random();
             base.OnEnabled();
         }
 
@@ -27,8 +29,7 @@ namespace SCPPlugins.PinkCandy
         private void Scp330OnInteractingScp330(InteractingScp330EventArgs ev)
         {
             if (ev.ShouldSever) return; //dont give pink candy as 3rd candy
-            var rng = new Random();
-            if (rng.Next(0, 100) < Config.PinkCandyChance)
+            if (_rng.Next(0, 100) < Config.PinkCandyChance)
             {
                 ev.Candy = CandyKindID.Pink;
             }

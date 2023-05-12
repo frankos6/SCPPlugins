@@ -20,6 +20,7 @@ namespace SCPPlugins.CISpies
         public override string Author => "frankos6";
         public override Version Version => new Version(1, 2, 0);
         public override Version RequiredExiledVersion => new Version(6, 0, 0, 0);
+        private Random _rng;
 
         public override void OnEnabled()
         {
@@ -31,6 +32,7 @@ namespace SCPPlugins.CISpies
             Exiled.Events.Handlers.Server.RoundStarted += ServerOnRoundStarted;
             Exiled.Events.Handlers.Server.RespawningTeam += ServerOnRespawningTeam;
             Exiled.Events.Handlers.Server.EndingRound += ServerOnEndingRound;
+            _rng = new Random();
             base.OnEnabled();
         }
         
@@ -52,7 +54,6 @@ namespace SCPPlugins.CISpies
         {
             if (ev.NextKnownTeam == SpawnableTeamType.ChaosInsurgency) return; //only handle MTF spawns
             if (Server.SessionVariables["SpyRespawned"].Equals(true)) return; //check if a spy spawned this round
-            var rng = new Random();
             var chance = Config.SpyChance;
             Log.Debug($"Base chance: {chance}");
             Log.Debug($"Modifier type: {Config.ModifierType}");
@@ -67,10 +68,10 @@ namespace SCPPlugins.CISpies
                     Log.Debug($"Modified chance: {chance}");
                     break;
             }
-            if (rng.Next(0, 100) < chance)
+            if (_rng.Next(0, 100) < chance)
             {
                 if (Config.SpawnSpyOnce) Server.SessionVariables["SpyRespawned"] = true; //prevent another spy from spawning
-                var target = ev.Players[rng.Next(ev.Players.Count)]; //choose a random spawned MTF
+                var target = ev.Players[_rng.Next(ev.Players.Count)]; //choose a random spawned MTF
                 target.SessionVariables["IsSpy"] = true;
                 Log.Debug($"{target.Nickname} respawned as a spy");
                 target.ShowHint("You are a Chaos Insurgency spy!\n" +
@@ -171,8 +172,7 @@ namespace SCPPlugins.CISpies
         private void PlayerOnEscaping(EscapingEventArgs ev)
         {
             if (ev.EscapeScenario != EscapeScenario.CuffedClassD && !ev.IsAllowed && !Config.ClassDSpies) return;
-            var rng = new Random();
-            if (rng.Next(0, 100) < Config.ClassDSpyChance)
+            if (_rng.Next(0, 100) < Config.ClassDSpyChance)
             {
                 ev.Player.SessionVariables["IsSpy"] = true;
                 Log.Debug($"{ev.Player.Nickname} escaped as a spy");
