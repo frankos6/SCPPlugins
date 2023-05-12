@@ -9,8 +9,8 @@ using Respawning;
 using Player = Exiled.API.Features.Player;
 using MEC;
 using System.Collections.Generic;
-using PlayerStatsSystem;
 using SCPPlugins.CISpies.Enums;
+using Random = System.Random;
 
 namespace SCPPlugins.CISpies
 {
@@ -26,6 +26,7 @@ namespace SCPPlugins.CISpies
             Exiled.Events.Handlers.Player.Joined += PlayerOnJoined;
             Exiled.Events.Handlers.Player.Hurting += PlayerOnHurting;
             Exiled.Events.Handlers.Player.Died += PlayerOnDied;
+            Exiled.Events.Handlers.Player.Escaping += PlayerOnEscaping;
             Exiled.Events.Handlers.Player.ChangingSpectatedPlayer += PlayerOnChangingSpectatedPlayer;
             Exiled.Events.Handlers.Server.RoundStarted += ServerOnRoundStarted;
             Exiled.Events.Handlers.Server.RespawningTeam += ServerOnRespawningTeam;
@@ -38,6 +39,7 @@ namespace SCPPlugins.CISpies
             Exiled.Events.Handlers.Player.Joined -= PlayerOnJoined;
             Exiled.Events.Handlers.Player.Hurting -= PlayerOnHurting;
             Exiled.Events.Handlers.Player.Died -= PlayerOnDied;
+            Exiled.Events.Handlers.Player.Escaping -= PlayerOnEscaping;
             Exiled.Events.Handlers.Player.ChangingSpectatedPlayer -= PlayerOnChangingSpectatedPlayer;
             Exiled.Events.Handlers.Server.RoundStarted -= ServerOnRoundStarted;
             Exiled.Events.Handlers.Server.RespawningTeam -= ServerOnRespawningTeam;
@@ -162,6 +164,21 @@ namespace SCPPlugins.CISpies
             if (ev.NewTarget.SessionVariables["IsSpy"].Equals(true))
             {
                 ev.Player.ShowHint($"{ev.NewTarget.Nickname} is a CI spy.",10f); //text shown to spectator
+            }
+        }
+        
+        /// <inheritdoc cref="Exiled.Events.Handlers.Player.OnEscaping"/>
+        private void PlayerOnEscaping(EscapingEventArgs ev)
+        {
+            if (ev.EscapeScenario != EscapeScenario.CuffedClassD && !ev.IsAllowed && !Config.ClassDSpies) return;
+            var rng = new Random();
+            if (rng.Next(0, 100) < Config.ClassDSpyChance)
+            {
+                ev.Player.SessionVariables["IsSpy"] = true;
+                Log.Debug($"{ev.Player.Nickname} escaped as a spy");
+                ev.Player.ShowHint("You are a Chaos Insurgency spy!\n" +
+                                "Yes, this is intended, so act normal\n" +
+                                "Friendly fire against CI's is reduced",10f);
             }
         }
 
