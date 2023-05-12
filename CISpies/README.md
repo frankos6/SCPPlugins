@@ -15,6 +15,12 @@
 - ModifierType - Specifies how the modifier will be added
 
   > Valid values: `PerPlayerOnline`, `PerPlayerRespawning`, `Disabled`
+- ClassDSpies - Allows cuffed Class D to escape as spies
+
+  > default: `false`
+- ClassDSpyChance - Chance for cuffed Class D to escape as a spy
+
+  > default: `5`
 
 ### Commands
 - `.reveal` - Reveals the identity of the spy

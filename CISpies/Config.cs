@@ -18,7 +18,7 @@ namespace SCPPlugins.CISpies
         public ModifierType ModifierType { get; set; } = ModifierType.Disabled;
         [Description("Make cuffed Class D escape as spies")] 
         public bool ClassDSpies { get; set; } = false;
-        [Description("Chance for cuffed Class D to escape as spies")] 
+        [Description("Chance for cuffed Class D to escape as a spy")] 
         public float ClassDSpyChance { get; set; } = 5f;
     }
 }
