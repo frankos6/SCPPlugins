@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Reflection;
 using Exiled.API.Enums;
 using Exiled.API.Features;
 using Exiled.CustomItems.API.Features;
@@ -14,7 +15,7 @@ namespace SCPPlugins.DocumentsPlugin
     public class DocumentsPlugin : Plugin<Config>
     {
         public override string Author => "frankos6";
-        public override Version Version => new Version(1, 3, 0);
+        public override Version Version => new Version(Assembly.GetCustomAttribute<AssemblyFileVersionAttribute>()?.Version ?? "1.3.0");
         public override Version RequiredExiledVersion => new Version(6, 0, 0, 0);
 
         public override void OnEnabled()

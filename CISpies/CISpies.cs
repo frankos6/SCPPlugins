@@ -9,6 +9,7 @@ using Respawning;
 using Player = Exiled.API.Features.Player;
 using MEC;
 using System.Collections.Generic;
+using System.Reflection;
 using SCPPlugins.CISpies.Enums;
 using Random = System.Random;
 
@@ -18,7 +19,7 @@ namespace SCPPlugins.CISpies
     public class CISpies : Plugin<Config>
     {
         public override string Author => "frankos6";
-        public override Version Version => new Version(1, 3, 0);
+        public override Version Version => new Version(Assembly.GetCustomAttribute<AssemblyFileVersionAttribute>()?.Version ?? "1.3.0");
         public override Version RequiredExiledVersion => new Version(6, 0, 0, 0);
         private Random _rng;
 
