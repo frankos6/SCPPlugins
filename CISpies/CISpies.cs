@@ -9,6 +9,7 @@ using Respawning;
 using Player = Exiled.API.Features.Player;
 using MEC;
 using System.Collections.Generic;
+using PlayerStatsSystem;
 using SCPPlugins.CISpies.Enums;
 
 namespace SCPPlugins.CISpies
@@ -110,7 +111,6 @@ namespace SCPPlugins.CISpies
             if (ev.Player.IsNTF && playerIsSpy && ev.Attacker.IsNTF && attackerIsSpy) //spy shooting a spy
             {
                 ev.Attacker.ShowHint($"{ev.Player.Nickname} is also a CI spy!",2f);
-                ev.Amount *= 0.4f;
             }
             else if (ev.Player.IsNTF && attackerIsSpy && ev.Attacker.IsNTF) //spy shooting a MTF
             {
