@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Reflection;
 using Exiled.API.Features;
 using Exiled.Events.EventArgs.Scp914;
 using Scp914;
@@ -23,8 +22,8 @@ namespace SCPPlugins.SCP914RoughKill
             Exiled.Events.Handlers.Scp914.UpgradingPlayer -= Scp914OnUpgradingPlayer;
             base.OnDisabled();
         }
-        
-        /// <inheritdoc cref="Exiled.Events.Handlers.Scp914.OnUpgradingPlayer"/>
+
+        /// <inheritdoc cref="Exiled.Events.Handlers.Scp914.OnUpgradingPlayer" />
         private static void Scp914OnUpgradingPlayer(UpgradingPlayerEventArgs ev)
         {
             if (ev.KnobSetting != Scp914KnobSetting.Rough) return;

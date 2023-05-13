@@ -1,7 +1,7 @@
-﻿using Exiled.API.Features;
-using System;
-using System.Reflection;
+﻿using System;
+using Exiled.API.Features;
 using Exiled.Events.EventArgs.Scp096;
+using Exiled.Events.Handlers;
 
 namespace SCPPlugins.NotifySCP096Targets
 {
@@ -13,20 +13,20 @@ namespace SCPPlugins.NotifySCP096Targets
 
         public override void OnEnabled()
         {
-            Exiled.Events.Handlers.Scp096.AddingTarget += Scp096OnAddingTarget;
+            Scp096.AddingTarget += Scp096OnAddingTarget;
             base.OnEnabled();
         }
-        
+
         public override void OnDisabled()
         {
-            Exiled.Events.Handlers.Scp096.AddingTarget -= Scp096OnAddingTarget;
+            Scp096.AddingTarget -= Scp096OnAddingTarget;
             base.OnDisabled();
         }
-        
-        /// <inheritdoc cref="Exiled.Events.Handlers.Scp096.OnAddingTarget"/>
+
+        /// <inheritdoc cref="Exiled.Events.Handlers.Scp096.OnAddingTarget" />
         private static void Scp096OnAddingTarget(AddingTargetEventArgs ev)
         {
-            ev.Target.ShowHint("You are targeted by SCP-096",5f);
+            ev.Target.ShowHint("You are targeted by SCP-096", 5f);
         }
     }
 }

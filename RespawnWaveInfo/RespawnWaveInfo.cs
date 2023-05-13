@@ -1,8 +1,7 @@
-﻿using Exiled.API.Features;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
+using Exiled.API.Features;
 using MEC;
 using PlayerRoles;
 using Respawning;
@@ -31,7 +30,7 @@ namespace SCPPlugins.RespawnWaveInfo
         {
             Timing.RunCoroutine(NotifyCoroutine());
         }
-        
+
         private static IEnumerator<float> NotifyCoroutine()
         {
             while (true)
@@ -41,21 +40,15 @@ namespace SCPPlugins.RespawnWaveInfo
                 var spectators = Player.List.Where(p => p.Role == RoleTypeId.Spectator).ToArray();
                 var wavetime = Respawn.TimeUntilSpawnWave;
                 var team = Respawn.NextKnownTeam == SpawnableTeamType.ChaosInsurgency
-                    ? "Chaos Insurgency" : "Nine-Tailed Fox";
+                    ? "Chaos Insurgency"
+                    : "Nine-Tailed Fox";
                 if (Respawn.IsSpawning)
-                {
                     message = "Time until next wave: Spawning!\n" +
                               $"Next team: {team}";
-                }
                 else
-                {
                     message = $"Time until next wave: {wavetime.Minutes}:{wavetime.Seconds:D2}\n" +
                               "Next team: ███████";
-                }
-                foreach (var spec in spectators)
-                {
-                    spec.Broadcast(1,message);
-                }
+                foreach (var spec in spectators) spec.Broadcast(1, message);
                 yield return Timing.WaitForSeconds(1);
             }
         }

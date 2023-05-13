@@ -20,11 +20,10 @@ namespace SCPPlugins.DocumentsPlugin
                 response = "The round must be in progress.";
                 return false;
             }
+
             var player = Player.Get(sender);
             if (!player.TryGetSessionVariable("Documents", out int count))
-            {
                 throw new Exception($"Could not get Documents variable from {player.Nickname}");
-            }
             response = $"You have collected {count}/4 documents.";
             return true;
         }
@@ -44,11 +43,10 @@ namespace SCPPlugins.DocumentsPlugin
                 response = "The round must be in progress.";
                 return false;
             }
+
             var player = Player.Get(sender);
             if (!player.TryGetSessionVariable("Documents", out int count))
-            {
                 throw new Exception($"Could not get Documents variable from {player.Nickname}");
-            }
             var arg = 0;
             bool result;
             try
@@ -59,28 +57,30 @@ namespace SCPPlugins.DocumentsPlugin
             {
                 result = false;
             }
+
             if (!result)
             {
                 player.SessionVariables["Documents"] = 0;
                 for (var i = count; i > 0; i--)
-                {
                     if (CustomItem.TrySpawn(1u, player.Position, out var pickup))
-                        Log.Debug($"Spawned Documents at {pickup?.Position ?? new Vector3()} (dropped by {player.Nickname})");
-                }
+                        Log.Debug(
+                            $"Spawned Documents at {pickup?.Position ?? new Vector3()} (dropped by {player.Nickname})");
                 response = $"Dropped {count} documents.";
                 return true;
             }
+
             if (arg <= 0)
             {
                 response = "Argument must be bigger that 0.";
                 return false;
             }
+
             if (arg >= count) arg = count;
             player.SessionVariables["Documents"] = count - arg;
-            for (var i = arg; i > 0; i--) { 
+            for (var i = arg; i > 0; i--)
                 if (CustomItem.TrySpawn(1u, player.Position, out var pickup))
-                    Log.Debug($"Spawned Documents at {pickup?.Position ?? new Vector3()} (dropped by {player.Nickname})");
-            }
+                    Log.Debug(
+                        $"Spawned Documents at {pickup?.Position ?? new Vector3()} (dropped by {player.Nickname})");
             response = $"Dropped {arg} documents.";
             return true;
         }

@@ -3,6 +3,7 @@
 #### Adds CI spies to MTF waves
 
 ### Config
+
 - SpyChance `float` - Chance to respawn a spy in a MTF wave (in percent)
 
   > default: `25`
@@ -23,4 +24,5 @@
   > default: `5`
 
 ### Commands
+
 - `.reveal` - Reveals the identity of the spy

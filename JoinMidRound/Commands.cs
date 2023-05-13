@@ -20,17 +20,17 @@ namespace SCPPlugins.JoinMidRound
                 response = "The round must be in progress.";
                 return false;
             }
+
             var player = Player.Get(sender);
             if (!Server.TryGetSessionVariable("LeftPlayers", out string[] list))
-            {
                 throw new Exception("Could not get LeftPlayers from session variables");
-            }
             if (list.Contains(player.UserId)) //anti-abuse system
             {
                 response = "You already died this round, didn't you?";
                 return false;
             }
-            if (Round.ElapsedTime.TotalSeconds <= 120 && 
+
+            if (Round.ElapsedTime.TotalSeconds <= 120 &&
                 player.SessionVariables["JoinedMidRound"].Equals(true) && player.Role == RoleTypeId.Spectator)
             {
                 player.SessionVariables["JoinedMidRound"] = false;
@@ -38,21 +38,25 @@ namespace SCPPlugins.JoinMidRound
                 response = "Respawning as Class D...";
                 return true;
             }
+
             if (Round.ElapsedTime.TotalSeconds > 120)
             {
                 response = "120 second grace period has expired.";
                 return false;
             }
+
             if (player.SessionVariables["JoinedMidRound"].Equals(false))
             {
                 response = "You did not join mid-round.";
                 return false;
             }
+
             if (player.IsAlive)
             {
                 response = "You must be dead to respawn.";
                 return false;
             }
+
             response = "xd";
             return false;
         }

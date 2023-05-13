@@ -1,14 +1,12 @@
 ﻿using System.ComponentModel;
 using Exiled.API.Interfaces;
+
 // ReSharper disable UnusedAutoPropertyAccessor.Global
 
 namespace SCPPlugins.ModifyScpPreferences
 {
     public class Config : IConfig
     {
-        public bool IsEnabled { get; set; }
-        public bool Debug { get; set; }
-
         [Description("SCP-049 preference setting\n" +
                      "  # Should be between -5 and 5, if not will default to players' custom preferences")]
         public int Scp049 { get; set; }
@@ -31,5 +29,8 @@ namespace SCPPlugins.ModifyScpPreferences
         [Description("List of players who ignore this plugin\n" +
                      "  # UserID format is SteamId64Here@steam, DiscordUserIDHere@discord, etc...")]
         public string[] IgnoredPlayers { get; set; } = { "SomeSteamId64@steam" };
+
+        public bool IsEnabled { get; set; }
+        public bool Debug { get; set; }
     }
 }

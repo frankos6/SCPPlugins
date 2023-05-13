@@ -6,9 +6,9 @@ using Exiled.API.Features.Attributes;
 using Exiled.API.Features.Spawn;
 using Exiled.CustomItems.API.Features;
 using Exiled.Events.EventArgs.Player;
+using MEC;
 using PlayerRoles;
 using UnityEngine;
-using MEC;
 
 namespace SCPPlugins.DocumentsPlugin
 {
@@ -20,9 +20,10 @@ namespace SCPPlugins.DocumentsPlugin
 
         public override string Description { get; set; } =
             "Important research documents. Steal all 4 of them to win the round!";
+
         public override float Weight { get; set; } = 10.0f; //controls item pickup time
-        public override Vector3 Scale { get; set; } = new Vector3(4.5f,1.7f,4.5f);
-        
+        public override Vector3 Scale { get; set; } = new Vector3(4.5f, 1.7f, 4.5f);
+
         //defines where the item can spawn
         //TODO: replace with a couple of presets
         public override SpawnProperties SpawnProperties { get; set; } = new SpawnProperties
@@ -110,7 +111,8 @@ namespace SCPPlugins.DocumentsPlugin
             {
                 ev.Player.ShowHint("Only Scientists or Guards can pick this up.");
                 ev.IsAllowed = false;
-                Timing.CallDelayed(3f, () => ev.IsAllowed = true); //prevents player from being unable to pickup the item ever again
+                Timing.CallDelayed(3f,
+                    () => ev.IsAllowed = true); //prevents player from being unable to pickup the item ever again
             }
             else
             {
@@ -131,15 +133,20 @@ namespace SCPPlugins.DocumentsPlugin
                         ev.Player.ShowHint("You already have all 4 documents.");
                         Log.Warn($"{ev.Player.Nickname} tried to pick up 5th document");
                         Timing.CallDelayed(3f, () => ev.IsAllowed = true);
-                    } else {
+                    }
+                    else
+                    {
                         count += 1;
-                        ev.Player.ShowHint($"You picked up a document!\n Collect all 4 and escape to win the round.\n You currently have {count}/4 documents",4.0f);
+                        ev.Player.ShowHint(
+                            $"You picked up a document!\n Collect all 4 and escape to win the round.\n You currently have {count}/4 documents",
+                            4.0f);
                         ev.Player.SessionVariables["Documents"] = count;
                         ev.Pickup.Destroy();
                         ev.IsAllowed = false;
                     }
                 }
             }
+
             base.OnPickingUp(ev);
         }
     }
