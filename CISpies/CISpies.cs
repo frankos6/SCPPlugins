@@ -10,13 +10,13 @@ using PlayerRoles;
 using Respawning;
 using SCPPlugins.CISpies.Enums;
 using Server = Exiled.API.Features.Server;
+using Random = UnityEngine.Random;
 
 namespace SCPPlugins.CISpies
 {
     // ReSharper disable once InconsistentNaming
     public class CISpies : Plugin<Config>
     {
-        private Random _rng;
         public override string Author => "frankos6";
         public override Version RequiredExiledVersion => new Version(7, 0, 0, 0);
 
@@ -30,7 +30,6 @@ namespace SCPPlugins.CISpies
             Exiled.Events.Handlers.Server.RoundStarted += ServerOnRoundStarted;
             Exiled.Events.Handlers.Server.RespawningTeam += ServerOnRespawningTeam;
             Exiled.Events.Handlers.Server.EndingRound += ServerOnEndingRound;
-            _rng = new Random();
             base.OnEnabled();
         }
 
@@ -68,12 +67,12 @@ namespace SCPPlugins.CISpies
                     break;
             }
 
-            if (_rng.Next(0, 100) < chance)
+            if (Random.Range(0f,100f) <= chance)
             {
                 if (Config.SpawnSpyOnce)
                     Server.SessionVariables["SpyRespawned"] =
                         true; //prevent another spy from spawning
-                var target = ev.Players[_rng.Next(ev.Players.Count)]; //choose a random spawned MTF
+                var target = ev.Players[Random.Range(0,ev.Players.Count)]; //choose a random spawned MTF
                 target.SessionVariables["IsSpy"] = true;
                 Log.Debug($"{target.Nickname} respawned as a spy");
                 target.ShowHint("You are a Chaos Insurgency spy!\n" +
@@ -162,7 +161,7 @@ namespace SCPPlugins.CISpies
         private void PlayerOnEscaping(EscapingEventArgs ev)
         {
             if (ev.EscapeScenario != EscapeScenario.CuffedClassD && !ev.IsAllowed && !Config.ClassDSpies) return;
-            if (_rng.Next(0, 100) < Config.ClassDSpyChance)
+            if (Random.Range(0f,100f) <= Config.ClassDSpyChance)
             {
                 ev.Player.SessionVariables["IsSpy"] = true;
                 Log.Debug($"{ev.Player.Nickname} escaped as a spy");

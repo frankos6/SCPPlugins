@@ -75,6 +75,9 @@
         <Reference Include="System.Core"/>
         <Reference Include="System.Data"/>
         <Reference Include="System.Xml"/>
+        <Reference Include="UnityEngine.CoreModule">
+            <HintPath>V:\scp_sl\SCPSL_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+        </Reference>
         <Reference Include="YamlDotNet, Version=11.0.0.0, Culture=neutral, PublicKeyToken=ec19458f3c15af5e, processorArchitecture=MSIL">
             <HintPath>..\packages\EXILED.7.0.0-rc.2\lib\net48\YamlDotNet.dll</HintPath>
         </Reference>
