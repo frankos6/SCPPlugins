@@ -18,9 +18,11 @@ namespace SCPPlugins.JoinMidRound
 
         public override string Author => "frankos6";
         public override Version RequiredExiledVersion => new Version(7, 0, 0, 0);
+        public static JoinMidRound Singleton;
 
         public override void OnEnabled()
         {
+            Singleton = this;
             Exiled.Events.Handlers.Player.Left += PlayerOnLeft;
             Exiled.Events.Handlers.Player.VoiceChatting += PlayerOnVoiceChatting;
             Exiled.Events.Handlers.Player.Verified += PlayerOnVerified;
@@ -30,6 +32,7 @@ namespace SCPPlugins.JoinMidRound
 
         public override void OnDisabled()
         {
+            Singleton = null;
             Exiled.Events.Handlers.Player.Left -= PlayerOnLeft;
             Exiled.Events.Handlers.Player.VoiceChatting -= PlayerOnVoiceChatting;
             Exiled.Events.Handlers.Player.Verified -= PlayerOnVerified;
@@ -73,7 +76,7 @@ namespace SCPPlugins.JoinMidRound
             if (!Server.TryGetSessionVariable("LeftPlayers", out string[] list))
                 throw new Exception("Could not get LeftPlayers from session variables");
             if (list.Contains(ev.Player.UserId)) return;
-            if (Round.ElapsedTime.TotalSeconds > 120) return;
+            if (Round.ElapsedTime.TotalSeconds > Config.LateJoinTime) return;
             _respawnCoroutines.Add(ev.Player, Timing.RunCoroutine(RespawnCoroutine(ev.Player)));
         }
 
