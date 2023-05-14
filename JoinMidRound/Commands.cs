@@ -30,7 +30,7 @@ namespace SCPPlugins.JoinMidRound
                 return false;
             }
 
-            if (Round.ElapsedTime.TotalSeconds <= 120 &&
+            if (Round.ElapsedTime.TotalSeconds <= JoinMidRound.Singleton.Config.LateJoinTime &&
                 player.SessionVariables["JoinedMidRound"].Equals(true) && player.Role == RoleTypeId.Spectator)
             {
                 player.SessionVariables["JoinedMidRound"] = false;
@@ -39,9 +39,9 @@ namespace SCPPlugins.JoinMidRound
                 return true;
             }
 
-            if (Round.ElapsedTime.TotalSeconds > 120)
+            if (Round.ElapsedTime.TotalSeconds > JoinMidRound.Singleton.Config.LateJoinTime)
             {
-                response = "120 second grace period has expired.";
+                response = "Late join grace period has expired.";
                 return false;
             }
 

@@ -7,6 +7,9 @@
 - RespawnTimer `int` - Time to cancel automatic respawn
 
   > default: `7`
+- LateJoinTime `int` - Maximum round time for late join
+
+  > default: `120`
 
 ### Commands
 
