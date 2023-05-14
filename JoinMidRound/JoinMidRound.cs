@@ -57,6 +57,7 @@ namespace SCPPlugins.JoinMidRound
         /// <inheritdoc cref="Exiled.Events.Handlers.Player.OnVoiceChatting" />
         private void PlayerOnVoiceChatting(VoiceChattingEventArgs ev)
         {
+            if (ev.Player == null) return;
             if (!_respawnCoroutines.TryGetValue(ev.Player, out var handle)) return;
             Timing.KillCoroutines(handle);
             ev.Player.ShowHint("Respawning was cancelled.\n" +
