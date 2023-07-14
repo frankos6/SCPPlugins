@@ -17,7 +17,7 @@ namespace SCPPlugins.JoinMidRound
             new Dictionary<Player, CoroutineHandle>();
 
         public override string Author => "frankos6";
-        public override Version RequiredExiledVersion => new Version(7, 0, 0, 0);
+        public override Version RequiredExiledVersion => new Version(7, 2, 0, 0);
         public static JoinMidRound Singleton;
 
         public override void OnEnabled()
